@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+html {
+    font-size: 1vw;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Noto Sans Hebrew", sans-serif;
+    height: 100vh;
+    background: linear-gradient(to bottom, #E8F4FD, #C2DFF0, #9AC7E1, #6B96C7);
+    min-height: 100vh;
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+input, textarea, select {
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0.5vh 0.5vw;
+}
+
+*:focus {
+    background-color: #B9D7EA;
+    outline: none;
+    border-radius: 0.2vw;
+}
+
+.container {
+    max-width: 75vw;
+    margin: 0 auto;
+    padding: 0 1vw;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 2vw;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    html {
+        font-size: 0.8vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        max-width: 95vw;
+        padding: 0 2vw;
+    }
+}
