@@ -1,0 +1,26 @@
+.inputField {
+  display: flex;
+  flex-direction: column;
+  width: 300px; 
+}
+
+.inputControl {
+  border: 2px solid black; 
+  height: 40px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%; 
+  padding-left: 20px;
+  direction: ltr; 
+  text-align: left; 
+}
+
+
+.inputControl:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}

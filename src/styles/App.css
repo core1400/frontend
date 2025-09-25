@@ -43,7 +43,6 @@ img {
 input, textarea, select {
     font-family: inherit;
     font-size: inherit;
-    margin: 0.5vh 0.5vw;
 }
 
 *:focus {
