@@ -1,14 +1,12 @@
-import React, { useState } from "react";
 import './styles/App.css';
-import InputField from './components/common/InputField/InputField';
+import Login from './pages/login/Login';
 
 function App() {
   
 
   return (
     <div className="App">
-
-
+      <Login/>
     </div>
   );
 }

@@ -1,0 +1,14 @@
+.page {
+  min-height: 100vh;      /* fill the viewport */
+  display: flex;
+  align-items: center;    /* vertical center */
+  justify-content: center;/* horizontal center */
+}
+
+.formWrapper {
+  width: 50vw;            /* take half the viewport width */
+  height: 90vh;           /* almost full height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

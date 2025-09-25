@@ -1,39 +1,39 @@
 .formControl {
   font-family: 'Segoe UI', sans-serif;
   margin: 1em 0;
-  max-width: 220px;
   position: relative;
+  width: var(--field-width);
 }
 
 .input {
-  font-size: 100%;
+  font-size: var(--text-size);
   padding: 0.8em;
   outline: none;
   border: 2px solid rgb(200, 200, 200);
   background-color: transparent;
-  border-radius: 6px; /* squarer look */
+  border-radius: 6px;
   width: 100%;
+  height: var(--field-height);
   color: black;
   transition: border-color 0.3s ease;
 }
 
 .input:focus {
-  border-color: #add8e6; 
+  border-color: var(--border-focus);
   animation: borderPulse 1.5s ease-in-out infinite;
 }
 
-
 .label {
-  font-size: 100%;
+  font-size: var(--text-size);
   position: absolute;
-  right: 0;         
+  right: 0;
   padding: 0.8em;
   margin-right: 0.5em;
   pointer-events: none;
   transition: all 0.3s ease;
-  color: rgb(150, 150, 150);
-}
 
+  color: var(--border-focus);
+}
 
 .input:focus ~ .label,
 .input:valid ~ .label {
@@ -41,13 +41,13 @@
   margin: 0;
   margin-right: 1.3em;
   padding: 0.4em;
-  background-color: #E8F4FD; 
-  color: #1e90ff;     
+  background-color: var(--label-bg);
+  color: var(--border-focus);
   border-radius: 4px;
 }
 
 @keyframes borderPulse {
-  0%   { border-color: #fff; }
-  50%  { border-color: #add8e6; }
-  100% { border-color: #fff; }
+  0%   { border-color: var(--border-pulse-a); }
+  50%  { border-color: var(--border-pulse-b); }
+  100% { border-color: var(--border-pulse-a); }
 }

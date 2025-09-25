@@ -2,7 +2,12 @@ import type { ChangeEvent } from "react";
 
 export interface InputFieldProps {
   label: string;
-  type: string;
-  value: string;
+  type: "text" | "number" | "password";
+  value: string | number;
+  labelBgColor: string;
+  textBorderColor: string;
+  width?: string;
+  height?: string;
+  textSize?: string;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
