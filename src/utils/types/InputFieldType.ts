@@ -2,7 +2,7 @@ import type { ChangeEvent } from "react";
 
 export interface InputFieldProps {
   label: string;
-  type?: string;
+  type: string;
   value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
