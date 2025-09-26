@@ -1,59 +1,105 @@
+:root {
+  --radius: 22px;
+  --ring: 2px;
+}
+
+.form3d {
+  position: relative;
+  width: clamp(320px, 50vw, 640px);
+  height: min(90vh, 720px);
+  margin: min(6vh, 64px) auto;
+  display: grid;
+  place-items: center;
+}
+
+.formBack {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.92) 100%);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.45),
+    0 24px 60px rgba(0,0,0,0.35),
+    0 2px 0 rgba(255,255,255,0.03) inset;
+  z-index: 0;
+  pointer-events: none;
+}
 
 .form {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-left: 2em;
-  padding-right: 2em;
-  padding-bottom: 0.4em;
-  background-color: #6B96C7;
-  border-radius: 25px;
-  transition: 0.4s ease-in-out;
-  width: 100%;                 
-  height: 100%;                
+  gap: 12px;
+  padding: 2em;
+  background: transparent;
+  border-radius: var(--radius);
+  width: 100%;
+  height: 100%;
   box-sizing: border-box;
+  border: var(--ring) solid rgba(0,0,0,0.95);
+  transition: border-color .25s ease, box-shadow .25s ease;
+  z-index: 1;
 }
 
-.card {
-  background-image: linear-gradient(to bottom, #000000, #1a1a1a, #303030, #434343);
-  border-radius: 22px;
-  transition: all 0.3s;
-  width: 50vw;
-  height: 90vh;
-  display: flex;
-  padding: 0.5rem;         
-  box-sizing: border-box;
+.form::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: var(--ring);
+
+  /* neon gradient instead of flat neon */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 255, 117, 1) 30%,
+    rgba(255, 255, 255, 1) 100%
+  );
+
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity .25s ease, filter .25s ease;
+  pointer-events: none;
 }
 
-.card2 {
-  border-radius: 0;
-  transition: all 0.2s;
-  flex: 1;
-  display: flex;            /* let .form stretch */
-  border-radius: 20px;      /* matches hover radius if you want rounded inner */
-  overflow: hidden;
+.form:hover,
+.form:focus-within {
+  border-color: transparent;
+  box-shadow:
+    0 0 10px rgba(0, 255, 117, 0.8),
+    0 0 24px rgba(255, 255, 255, 0.6);
 }
 
-.card2:hover {
-  transform: scale(0.98);
-  border-radius: 20px;
-}
-
-.card:hover {
-  box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.3);
+.form:hover::before,
+.form:focus-within::before {
+  opacity: 1;
+  filter: blur(12px);
 }
 
 .heading {
   text-align: center;
-  margin: 2em;
-  color: rgb(255, 255, 255);
-  font-size: 1.2em;
+  margin: 0 0 1.2em 0;
+  color: #ffffff;
+  font-size: clamp(1.1rem, 1.2rem + 0.3vw, 1.6rem);
+  letter-spacing: 0.5px;
+  transition: color .25s ease, text-shadow .25s ease;
+}
+
+.form:hover .heading,
+.form:focus-within .heading {
+  color: #00ff75;
+  text-shadow:
+    0 0 6px rgba(0, 255, 117, 0.9),
+    0 0 18px rgba(255, 255, 255, 0.7);
 }
 
 .btn {
   display: flex;
   justify-content: center;
-  margin-top: 2.5em;
+  margin-top: 2em;
 }
 
 .button1 {
@@ -70,4 +116,47 @@
 .button1:hover {
   background-color: black;
   color: white;
+}
+
+@media (max-width: 1024px) {
+  .form3d {
+    width: 70vw;
+    height: min(82vh, 660px);
+  }
+  .form {
+    padding: 1.6em;
+  }
+}
+
+@media (max-width: 768px) {
+  .form3d {
+    width: 92vw;
+    height: auto;
+    margin: 24px auto;
+  }
+  .form {
+    padding: 1.25em;
+    min-height: 56vh;
+  }
+  .btn {
+    margin-top: 1.5em;
+  }
+}
+
+@media (max-height: 600px) {
+  .form3d {
+    height: auto;
+    margin: 20px auto;
+  }
+  .form {
+    min-height: 420px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form,
+  .form::before,
+  .heading {
+    transition: none;
+  }
 }
