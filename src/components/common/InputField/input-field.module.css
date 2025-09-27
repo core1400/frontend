@@ -14,7 +14,7 @@
   border-radius: 6px;
   width: 100%;
   height: var(--field-height);
-  color: black;
+  color: var(--value-color);
   transition: border-color 0.3s ease;
 }
 

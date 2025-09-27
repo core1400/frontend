@@ -4,6 +4,7 @@ export interface InputFieldProps {
   label: string;
   type: "text" | "number" | "password";
   value: string | number;
+  valueColor: string;
   labelBgColor: string;
   textBorderColor: string;
   width?: string;

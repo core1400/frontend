@@ -1,11 +1,12 @@
 import React from "react";
 import type { InputFieldProps } from "../../../utils/types/InputFieldType";
-import styles from "./InputField.module.css";
+import styles from "./input-field.module.css";
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
   type = "text",
   value,
+  valueColor,
   onChange,
   labelBgColor,
   textBorderColor,
@@ -22,6 +23,7 @@ const InputField: React.FC<InputFieldProps> = ({
           "--field-width": width,
           "--field-height": height,
           "--text-size": textSize,
+          "--value-color": valueColor,
           "--label-bg": labelBgColor,
           "--border-focus": textBorderColor,
           "--border-pulse-a": "#ffffff",

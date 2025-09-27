@@ -1,20 +1,22 @@
 .page {
-  height: 100vh;
+  min-height: 100vh;          
   width: 100%;
   background: 
     linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, white 100%),
-    url("/src/assets/loginbg.png"); 
+    url("/src/assets/loginbg.png");
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: auto;             
+  box-sizing: border-box;
 }
 
 .formWrapper {
+  flex: 0 0 auto;         
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
 }
