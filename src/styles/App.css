@@ -13,7 +13,12 @@ html {
 body {
     font-family: "Noto Sans Hebrew", sans-serif;
     height: 100vh;
-    background: linear-gradient(to bottom, #E8F4FD, #C2DFF0, #9AC7E1, #6B96C7);
+    background: 
+    linear-gradient(to bottom, rgba(255, 255, 255, 0) 30%, white 100%),
+    url("/src/assets/loginbg.png");
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
     min-height: 100vh;
     margin: 0;
     font-size: 1.6rem;
