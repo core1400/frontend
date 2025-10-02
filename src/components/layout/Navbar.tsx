@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from "./navbar.module.css";
 import coreLogo from "../../assets/core-logo-navbar.jpg";
 import type {Role} from "../../utils/types/navbar.types";
@@ -45,12 +46,13 @@ const SignOutIcon: React.FC = () => (
 
 const Navbar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [selectedPage, setSelectedPage] = useState<string>("");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // dummy server data — replace when API is ready
   const name: string = "אור שביט מליבוב";
   const misparIshi: string = "123456789";
-  const role: Role = "ממ\"ק";
+  const role: Role = "חניך";
 
   const { greeting } = useMemo<{ greeting: string }>(() => {
     const now = new Date();
@@ -71,6 +73,11 @@ const Navbar: React.FC = () => {
       document.body.style.overflow = original;
     };
   }, [open]);
+
+  // Close the sidebar on route change
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   const visiblePages = pages.filter((p) => p.roles.includes(role));
 
@@ -96,28 +103,24 @@ const Navbar: React.FC = () => {
 
         {visiblePages.map((page) => (
           <li key={page.id}>
-            <a
-              href={page.path}
-              className={selectedPage === page.id ? styles.active : ""}
-              onClick={(e) => {
-                e.preventDefault();
-                setSelectedPage(page.id);
-              }}
+            <NavLink
+              to={page.path}
+              className={({ isActive }) => (isActive ? styles.active : "")}
             >
               {page.label}
-            </a>
+            </NavLink>
           </li>
         ))}
 
         <li className={styles.sidebarDivider} aria-hidden="true"></li>
 
-        {/* Sign out button (no logic yet) */}
+        {/* Sign out button (no actual logic yet) */}
         <li>
           <button
             type="button"
             className={styles.signOutBtn}
             aria-label="Sign out"
-            // no onClick logic for now
+            onClick={() => navigate("/login")}
           >
             <SignOutIcon />
             <span>יציאה</span>
@@ -144,7 +147,9 @@ const Navbar: React.FC = () => {
         <li className={styles.item}><span>מ.א: {misparIshi}</span></li>
         <li className={`${styles.item} ${styles.role}`}><strong>{role}</strong></li>
         <li className={styles.brandLeft}>
-          <img src={coreLogo} alt="CORE logo" className={styles.brandImg} />
+          <NavLink to="/home" className={styles.brandBtn} aria-label="לדף הבית">
+            <img src={coreLogo} alt="CORE logo" className={styles.brandImg} />
+          </NavLink>
         </li>
       </ul>
     </nav>
