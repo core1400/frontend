@@ -1,15 +1,27 @@
 import React, { useState } from "react";
 import styles from "./form.module.css";
 import InputField from "../../../components/common/InputField/InputField";
+import type { LoginCredentials } from "../types/login.types";
 
-const Form: React.FC = () => {
+export interface LoginFormProps {
+  onSubmit: (creds: LoginCredentials) => void | Promise<void>;
+  loading?: boolean;
+  errorMsg?: string | null; // חדש: הודעת שגיאה שמגיעה מהדף
+}
+
+const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({ username, password });
+  };
 
   return (
     <div className={styles.loginCard}>
       <div className={styles.cardBackdrop} />
-      <form className={styles.loginForm}>
+      <form className={styles.loginForm} onSubmit={handleSubmit}>
         <p className={styles.loginTitle}>התחברות</p>
 
         <InputField
@@ -23,6 +35,7 @@ const Form: React.FC = () => {
           width="100%"
           height="48px"
           textSize="16px"
+          // disabled={loading} // אופציונלי: לנעול בזמן טעינה
         />
 
         <InputField
@@ -36,10 +49,19 @@ const Form: React.FC = () => {
           width="100%"
           height="48px"
           textSize="16px"
+          // disabled={loading} // אופציונלי
         />
 
+        {errorMsg && (
+          <div className={styles.errorMsg}>
+            {errorMsg}
+          </div>
+        )}
+
         <div className={styles.actions}>
-          <button className={styles.submitButton}>Login</button>
+          <button type="submit" className={styles.submitButton} disabled={loading}>
+            {loading ? "מבצע התחברות..." : "Login"}
+          </button>
         </div>
       </form>
     </div>
