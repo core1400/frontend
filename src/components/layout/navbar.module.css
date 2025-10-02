@@ -123,8 +123,9 @@
 
 
 .active {
-  background-color: #dff0d2;
-  border-inline-start: 3px solid #66b539;
+  background-color: #489d18a1;
+  border-bottom: 2px solid #e8f7dd;
+  outline: none;
 }
 
 .sidebarDivider {

@@ -18,7 +18,7 @@ function Home() {
 
 function App() {
   const location = useLocation();
-  const showNavbar = location.pathname !== '/login';
+  const showNavbar: boolean = location.pathname !== '/login';
   
 
   return (
@@ -42,7 +42,7 @@ function App() {
             }
           />
         ))}
-        {/* Fallback: anything else -> login */}
+
         <Route path="/" element={<Navigate to="/home" replace />} />
       </Routes>
     </div>
