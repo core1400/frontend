@@ -23,7 +23,6 @@
   display: flex;
   align-items: center;
   padding-inline: 30px;
-  cursor: default;
 }
 
 .brandLeft:hover {
@@ -124,8 +123,9 @@
 
 
 .active {
-  background-color: #dff0d2;
-  border-inline-start: 3px solid #66b539;
+  background-color: #489d18a1;
+  border-bottom: 2px solid #e8f7dd;
+  outline: none;
 }
 
 .sidebarDivider {
@@ -156,6 +156,17 @@
 .signOutBtn:active {
   background-color: rgba(211, 47, 47, 0.16);
 }
+
+.brandBtn {
+  border: none;
+  background: none;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding-inline: 30px;
+  cursor: pointer;
+}
+.brandBtn:hover { background-color: #f0f0f0; }
 
 .menuButton { display: block; }
 
