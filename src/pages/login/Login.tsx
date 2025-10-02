@@ -4,7 +4,6 @@ import Form from "./components/Form";
 import Popup from "./components/Popup";
 import type { LoginCredentials, LoginResult } from "./types/login.types";
 
-
 async function loginRequest(creds: LoginCredentials): Promise<LoginResult> {
   await new Promise((r) => setTimeout(r, 600));
 
@@ -12,14 +11,14 @@ async function loginRequest(creds: LoginCredentials): Promise<LoginResult> {
     return { success: false, firstLogin: false, message: "פרטים חסרים" };
   }
 
-  // the backend answer, currently a demo answer
+  // דמו לתשובת שרת
   return {
     success: true,
-    firstLogin: true,           // answer from backend
-    tempPassword: "A7F9-3QZP-12"// backend gives the password
+    firstLogin: true,            // נקבע ע"י השרת
+    tempPassword: "A7F9-3QZP-12" // סיסמה זמנית מהשרת
   };
 
-  // if its not first time demo:
+  // דוגמה ללא התחברות ראשונה:
   // return { success: true, firstLogin: false };
 }
 
@@ -61,15 +60,8 @@ const Login: React.FC = () => {
   return (
     <div className={styles.page}>
       <div className={styles.formWrapper}>
-        <Form onSubmit={handleSubmit} loading={loading} />
+        <Form onSubmit={handleSubmit} loading={loading} errorMsg={errorMsg} />
       </div>
-
-      {errorMsg && (
-        <div className={styles.errorMsg}>
-          {errorMsg}
-        </div>
-      )}
-
 
       {showPopup && tempPassword && (
         <Popup
