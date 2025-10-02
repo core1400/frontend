@@ -1,42 +1,47 @@
-import type {Role} from "../types/navbar.types";
 import type { PageConfig } from "../types/navbar.types";
 
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
   {
-    id: "schedule",
+    id: "calender",
     label: "לו\"ז שבועי",
-    path: "/schedule",
-    roles: ["חניך", "מפקד", "ממ\"ק", "אדמין"],
-  },
-  {
-    id: "forms",
-    label: "טפסים שימושיים",
-    path: "/forms",
-    roles: ["חניך", "מפקד", "ממ\"ק", "אדמין"],
-  },
-  {
-    id: "students",
-    label: "מאגר מידע חניכים",
-    path: "/students",
-    roles: ["מפקד", "ממ\"ק", "אדמין"],
-  },
-  {
-    id: "class",
-    label: "חנתר וא' כיתה",
-    path: "/class",
+    path: "/calender",
     roles: ["חניך", "מפקד", "ממ\"ק"],
   },
   {
-    id: "files",
-    label: "הגשת טפסים",
-    path: "/files",
+    id: "studentRole",
+    label: "חנתר וא' כיתה",
+    path: "/student-roles",
+    roles: ["מפקד"],
+  },
+  {
+    id: "commonForms",
+    label: "טפסים נפוצים",
+    path: "/common-forms",
+    roles: ["מפקד", "ממ\"ק"],
+  },
+  {
+    id: "Bakshatz",
+    label: "בקש\"צ",
+    path: "/bakshatz",
     roles: ["חניך"],
   },
   {
-    id: "admin",
-    label: "ניהול מערכת",
-    path: "/admin",
+    id: "userManagement",
+    label: "ניהול משתמשים",
+    path: "/user-managment",
     roles: ["אדמין"],
+  },
+  {
+    id: "exams",
+    label: "ניהול מבחנים",
+    path: "/exams",
+    roles: ["מפקד"],
+  },
+  {
+    id: "courseInfo",
+    label: "מידע כללי קורס",
+    path: "/course-info",
+    roles: ["מפקד", "ממ\"ק"],
   },
 ];
