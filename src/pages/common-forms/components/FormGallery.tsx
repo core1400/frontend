@@ -4,6 +4,7 @@ import FormBlock from './FormBlock';
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import type { FormGalleryProps } from '../types/common-forms.types';
+import { TbFileSad } from "react-icons/tb";
 
 GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
@@ -131,7 +132,16 @@ const FormGallery: React.FC<FormGalleryProps> = ( { forms } ) => {
 
   return (
     <div className={styles.galleryContainer}>
+
+
       <div className={styles.gallery}>
+        {/* Empty state */}
+        {forms.length === 0 && (
+          <div className={styles.emptyState}>
+            <TbFileSad className={styles.TbFileSad} />
+            <p>No Files Found</p>
+          </div>
+        )}
         {forms.map((form, index) => (
           <FormBlock
             key={index}
@@ -144,7 +154,9 @@ const FormGallery: React.FC<FormGalleryProps> = ( { forms } ) => {
             onOpenInNewTab={() => window.open(form.fileURL, '_blank')}
           />
         ))}
+        
       </div>
+        
     </div>
   );
 };
