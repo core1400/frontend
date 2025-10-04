@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { FaExternalLinkAlt, FaPrint, FaDownload, FaFilePdf, FaFileWord, FaFileExcel, FaFilePowerpoint, FaFileImage, FaFileAlt } from 'react-icons/fa';
 import styles from './form-block.module.css';
+import type { FormBlockProps } from '../types/common-forms.types';
 
-interface FormBlockProps {
-  fileName: string;
-  fileType: string;
-  previewImage: string;
-  fileURL: string;
-  onDownload: () => void;
-  onOpenInNewTab: () => void;
-  onPrint: () => void;
-}
 
 const FormBlock: React.FC<FormBlockProps> = ({ 
   fileName, 
@@ -120,20 +112,24 @@ const FormBlock: React.FC<FormBlockProps> = ({
   return (
     <div className={styles.formBlock}>
         <div className={styles.iconBar}>
-        <button 
-          className={styles.iconButton} 
-          onClick={onOpenInNewTab}
-          title="open in new tab"
-        >
-          <FaExternalLinkAlt />
-        </button>
-        <button 
-          className={styles.iconButton} 
-          onClick={onPrint}
-          title="print file"
-        >
-          <FaPrint />
-        </button>
+        {/* if pdf */ }
+        {fileType.toLowerCase() === 'pdf' && (
+          <><button
+                      className={styles.iconButton}
+                      onClick={onOpenInNewTab}
+                      title="open in new tab"
+                  >
+                      <FaExternalLinkAlt />
+                  </button><button
+                      className={styles.iconButton}
+                      onClick={onPrint}
+                      title="print file"
+                  >
+                          <FaPrint />
+                      </button></>
+        )}
+
+        {/*always available */}
         <button 
           className={styles.iconButton} 
           onClick={onDownload}
@@ -146,7 +142,7 @@ const FormBlock: React.FC<FormBlockProps> = ({
         {renderPreview()}
       </div>
       <div className={styles.info}>
-        <h3>{fileName}</h3>
+        <h3 className={styles.fileName}>{fileName}</h3>
         <div className={styles.fileDetails}>
           {pageCount !== null && <span>{pageCount} עמודים</span>}
           {pageCount !== null && fileSize && <span> • </span>}

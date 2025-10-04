@@ -3,19 +3,9 @@ import styles from './form-gallery.module.css';
 import FormBlock from './FormBlock';
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import type { FormGalleryProps } from '../types/common-forms.types';
 
 GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
-
-interface Form {
-    fileName: string;
-    fileType: string;
-    fileURL: string;
-}
-
-interface FormGalleryProps {
-  forms: Form[];
-}
 
 const FormGallery: React.FC<FormGalleryProps> = ( { forms } ) => {
   const [previews, setPreviews] = useState<{ [key: string]: string }>({});

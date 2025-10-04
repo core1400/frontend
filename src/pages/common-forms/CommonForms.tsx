@@ -2,16 +2,24 @@ import React, { useState, useEffect } from "react";
 import styles from './common-forms.module.css';
 import FormGallery from "./components/FormGallery";
 import { FaSearch } from "react-icons/fa";
+
+//dummy data
 import myPDF from '../../assets/test.pdf';
 import myPDF2 from '../../assets/jokes.pdf';
+import myPDF3 from '../../assets/testtttt.pdf';
 import myWord from '../../assets/standup.docx?url'
+import myxl from '../../assets/test3.xlsx?url';
+
+
+import DragAndDropFiles from "./components/DragAndDropFiles";
 
 const CommonForms: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredForms, setFilteredForms] = useState<typeof forms>([]);
 
-    const formsList = [myPDF, myPDF2, myWord];
-    // dummy forms data
+    //import from backend (dummy data for now)
+    const formsList = [myPDF, myPDF3, myWord, myxl, myPDF2];
+
     const forms = formsList.map(file => ({
         fileName: file.split('/').pop()?.split('.')[0] || '',
         fileType: file.split('.').pop()?.toLowerCase() || '',
@@ -36,7 +44,9 @@ const CommonForms: React.FC = () => {
   return (
     <div>
         <div className={styles.header}>
-            <h1>טפסים נפוצים</h1>
+            <h1 className={styles.title}>
+          טפסים<span className={styles.accent}> נפוצים</span>
+        </h1>
             
             {/* Search bar */}
             <div className={styles.headerSearch}>
@@ -53,8 +63,16 @@ const CommonForms: React.FC = () => {
             </div>
         </div>
 
-        {/* Gallery of forms */}
-        <FormGallery forms={filteredForms} />
+        {/* Content container with both components */}
+        <div className={styles.contentContainer}>
+            {/* DragAndDropFiles */}
+            <DragAndDropFiles />
+            
+            {/* Gallery of forms */}
+            <FormGallery forms={filteredForms} />
+
+            
+        </div>
     </div>
 
   );

@@ -18,6 +18,11 @@
     background: linear-gradient(to right, transparent 0%, #ddd 30%, #ddd 70%, transparent 100%);
 }
 
+
+.accent {
+    color: white;
+}
+
 .headerSearch {
     display: flex;
     align-items: center;
@@ -58,3 +63,12 @@
     z-index: 1;
 }
 
+.contentContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
