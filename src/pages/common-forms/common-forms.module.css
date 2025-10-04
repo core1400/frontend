@@ -19,7 +19,7 @@
 }
 
 .title {
-    font-size: 110%;
+    font-size: 28px;
     font-weight: bold;
     color: #333;
     margin: 0;
@@ -74,7 +74,36 @@
     justify-content: center;
     align-items: flex-start;
     gap: 24px;
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .contentContainer {
+        flex-direction: column;
+        padding: 16px;
+        gap: 16px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .headerSearch {
+        max-width: 100%;
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .headerSearchInput {
+        font-size: 16px;
+        padding: 10px 16px;
+        padding-left: 45px;
+    }
 }

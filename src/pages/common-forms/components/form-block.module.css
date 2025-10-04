@@ -9,6 +9,7 @@
   align-items: center;
   gap: 5px;
   width: 100%;
+  min-width: 260px;
   height: 230px;
 }
 
