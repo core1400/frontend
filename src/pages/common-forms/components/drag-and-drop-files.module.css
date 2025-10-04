@@ -1,0 +1,135 @@
+.dragAndDropContainer {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    height: calc(100vh - 170px);
+    padding: 20px;
+    width: 320px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dropZone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 16px;
+}
+
+.dropZone:hover {
+    border-color: #3b82f6;
+    background: #eff6ff;
+}
+
+.dropZone.dragActive {
+    border-color: #3b82f6;
+    background: #dbeafe;
+}
+
+.uploadIcon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 12px;
+    color: #3b82f6;
+}
+
+.dropText {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0;
+}
+
+.statusText {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.fileList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.fileItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.fileItem:hover {
+    background: #f1f5f9;
+}
+
+.fileIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+
+.fileInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.fileName {
+    font-size: 14px;
+    color: #1f2937;
+    margin: 0 0 4px 0;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fileSize {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0;
+}
+
+.submitBtn {
+    margin-top: 1.0rem;
+    margin-bottom: -1rem;
+    padding: 0.75rem 1.5rem;
+    background: #31cd7a;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.submitBtn:hover {
+    background: #28a663;
+}

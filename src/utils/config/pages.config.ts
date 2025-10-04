@@ -1,5 +1,5 @@
 import type { PageConfig } from "../types/navbar.types";
-
+import  CommonForms from "../../pages/common-forms/CommonForms";
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
   {
@@ -19,6 +19,7 @@ export const pages: PageConfig[] = [
     label: "טפסים נפוצים",
     path: "/common-forms",
     roles: ["מפקד", "ממ\"ק"],
+    element: CommonForms,
   },
   {
     id: "Bakshatz",

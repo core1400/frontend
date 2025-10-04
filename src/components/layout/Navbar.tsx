@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
   // dummy server data — replace when API is ready
   const name: string = "אור שביט מליבוב";
   const misparIshi: string = "123456789";
-  const role: Role = "חניך";
+  const role: Role = "מפקד";
 
   const { greeting } = useMemo<{ greeting: string }>(() => {
     const now = new Date();

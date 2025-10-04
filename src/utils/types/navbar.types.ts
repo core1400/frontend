@@ -5,4 +5,5 @@ export interface PageConfig {
   label: string;
   path: string;
   roles: Role[];   // which roles can see this page
+  element?: React.FC;
 }
