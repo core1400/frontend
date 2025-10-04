@@ -5,16 +5,7 @@ import Login from './pages/login/Login';
 import Navbar from './components/layout/Navbar';
 import PagePlaceholder from './components/common/page-placeholder/PagePlaceholder';
 import { pages } from './utils/config/pages.config';
-
-//home page placeholder:
-function Home() {
-  return (
-    <div style={{ padding: 24 }}>
-      <h1 style={{ marginTop: 0 }}>בית</h1>
-      <p>ברוך הבא 👋</p>
-    </div>
-  );
-}
+import Home from './pages/home/Home';
 
 function App() {
   const location = useLocation();
