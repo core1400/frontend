@@ -1,5 +1,7 @@
 import type { PageConfig } from "../types/navbar.types";
 import  CommonForms from "../../pages/common-forms/CommonForms";
+import  Calendar from "../../pages/calendar/Calendar";
+
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
   {
@@ -7,6 +9,7 @@ export const pages: PageConfig[] = [
     label: "לו\"ז שבועי",
     path: "/calender",
     roles: ["חניך", "מפקד", "ממ\"ק"],
+    element: Calendar,
   },
   {
     id: "studentRole",

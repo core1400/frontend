@@ -1,0 +1,94 @@
+.modalBackdrop{
+  position:fixed; inset:0; background:rgba(16,33,28,.35);
+  display:grid; place-items:center; z-index:50;
+}
+
+/* המודאל עצמו מוגבל לגובה מסך + גלילה פנימית */
+.modal{
+  width:min(640px,92vw);
+  max-height:88vh;
+  background:#fff; border-radius:16px;
+  box-shadow:0 30px 60px rgba(0,0,0,.2);
+  display:flex; flex-direction:column;
+}
+.modalHeader{
+  display:flex; align-items:center; justify-content:space-between;
+  font-weight:800; padding:18px 18px 8px; font-size:22px; color:var(--brand-ink);
+}
+.iconBtn{ border:none; background:transparent; cursor:pointer; font-size:20px; line-height:1; }
+
+/* גוף המודאל עם גלילה כאשר התוכן גבוה */
+.modalBody{
+  padding:0 18px 6px;
+  overflow-y:auto;
+}
+
+/* שדות */
+.field{ display:flex; flex-direction:column; gap:6px; margin:10px 0; }
+.field>span{ font-size:14px; color:var(--brand-ink-weak); }
+
+.fieldRow{
+  display:flex; align-items:center; justify-content:space-between;
+}
+.counter{
+  font-size:12px; color:#667; white-space:nowrap;
+}
+
+.field input[type="text"],
+.field input[type="time"],
+.textarea{
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 12px;
+  background:var(--surface-2);
+  font-size:14px;
+}
+
+/* input חד-שורה עם אליפסיס */
+.wrapInput{ overflow:hidden; text-overflow:ellipsis; direction:rtl; }
+
+/* textarea – גדילה אוטומטית עד 40vh; אח"כ scrollbar פנימי */
+.textarea{
+  resize:none;            /* ניהול גובה בקוד */
+  line-height:1.35;
+  max-height:40vh;
+  overflow:auto;
+}
+
+/* עטיפה חכמה לכל טקסט ארוך */
+.wrapAnywhere{
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  hyphens:auto;
+}
+
+.grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+
+/* צבעים */
+.colorGrid{ display:grid; grid-template-columns:repeat(8,1fr); gap:8px; }
+.colorSwatch{ width:34px; height:28px; border-radius:8px; border:2px solid transparent; cursor:pointer; }
+.isActive{ outline:2px solid var(--accent-2); border-color:var(--accent-2); }
+
+/* כפתורים בתחתית – לא נגללים עם הגוף */
+.modalActions{
+  display:flex; gap:10px; justify-content:flex-start;
+  padding:12px 18px 18px; border-top:1px solid #00000010;
+}
+.primaryBtn, .ghostBtn{
+  border-radius:10px; padding:10px 14px; cursor:pointer; border:1px solid var(--line);
+}
+.primaryBtn{ background:var(--accent-1); border-color:var(--accent-2); font-weight:700; }
+.primaryBtn:hover{ filter:brightness(.98); }
+.ghostBtn{ background:var(--surface-2); }
+
+/* read-only boxes */
+.readonlyBox{
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 12px;
+}
+
+@media (max-width:900px){ .colorGrid{ grid-template-columns:repeat(6,1fr); } }
+@media (max-width:640px){ .grid2{ grid-template-columns:1fr; } }
