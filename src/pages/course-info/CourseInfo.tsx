@@ -1,17 +1,17 @@
-'use client';
-import React from 'react';
-import CourseTable from './components/CourseTable';
 import styles from './course-info.module.css';
+import CourseTable from './components/CourseTable';
 
 export default function CourseInfo() {
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>מידע קורס</h1>
-
-      {/* Natural width; roomy gaps from navbar and sides */}
-      <div className={styles.content}>
+    <section className={styles.page}>
+      <h1 className={styles.title}>
+        <span className={styles.titleGrey}>חניכי</span>{" "}
+        <span className={styles.titleWhite}>הקורס</span>
+      </h1>
+      <div className={styles.pageBodyWrapper}>
         <CourseTable />
       </div>
-    </div>
+    </section>
+    
   );
 }

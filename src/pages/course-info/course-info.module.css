@@ -1,25 +1,31 @@
-.container {
-  min-height: 100vh;
+.page {
   display: flex;
   flex-direction: column;
-  /* roomy page padding so content never hugs the edges or navbar */
-  padding-inline: clamp(16px, 3vw, 32px);
-  padding-block: clamp(12px, 2.5vh, 24px);
-  box-sizing: border-box;
-  direction: rtl; /* page is RTL */
+  direction: rtl;
+  height: calc(100vh - 70px);
+  width: 100vw;
 }
 
 .title {
-  margin: 0 0 clamp(8px, 1.5vh, 16px) 0;
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 800;
+  text-align: center;
+  padding: 10px 0;
 }
 
-/* Wrap for the table area:
-   - takes full available width
-   - auto margins keep it away from sides on ultra-wide screens
-   - optional max-width to avoid super-long lines (tweak if you want) */
-.content {
-  width: 100%;
-  max-width: 1600px;      /* adjust or remove if you want truly unlimited width */
-  margin-inline: auto;    /* centers the block and preserves side gaps */
-  min-height: 0;          /* ensures inner DataTable with scrollHeight="flex" can size */
+.titleGrey {
+  color: #333;
+}
+
+.titleWhite {
+  color: #ffffff;
+}
+
+.pageBodyWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }

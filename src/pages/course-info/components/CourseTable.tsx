@@ -1,336 +1,383 @@
-import React, { useMemo, useState } from 'react';
-import shadow from 'react-shadow';
+import { useMemo, useState, useCallback } from "react";
+import styles from "./course-table.module.css";
+import { FaPen } from "react-icons/fa";
 
-import { DataTable } from 'primereact/datatable';
-import type { DataTableRowEditCompleteEvent } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
-import { Calendar } from 'primereact/calendar';
+type Test = { name: string; grade: number };
 
-import { initialData, average, DATE_FORMAT } from '../../../utils/helper-functions/courseInfoHelpers';
-import type { StudentRow as BaseStudentRow } from '../../../utils/helper-functions/courseInfoHelpers';
+type Row = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  personalId: string;
+  phone: string;
+  birthday: string;
+  emergencyContact: string;
+  emergencyPhone: string;
+  answersCount: number;
+  tests: Test[];
+};
 
-// 🔒 Inject our component's CSS into the Shadow DOM
-const SHADOW_CSS = `
-.ct-wrapper {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+function makeTests(seed: number): Test[] {
+  const base = (n: number) => ((seed * 17 + n * 29) % 41) + 60;
+  return [
+    { name: "מבחן 1", grade: base(1) },
+    { name: "מבחן 2", grade: base(2) },
+    { name: "מבחן 3", grade: base(3) },
+  ];
 }
-.ct-rtl { direction: rtl; }
-.ct-table :global(.p-datatable) { font-family: inherit; }
-.ct-table :global(.p-datatable-wrapper) { height: 100%; }
-
-/* Right-align headers and cells in RTL */
-.ct-table :global(.p-datatable-thead > tr > th),
-.ct-table :global(.p-datatable-tbody > tr > td) {
-  text-align: right;
-}
-
-/* Filter inputs RTL + right aligned */
-.ct-table :global(.p-column-filter .p-inputtext),
-.ct-table :global(.p-column-filter .p-inputnumber-input),
-.ct-table :global(.p-inputtext) {
-  text-align: right;
-  direction: rtl;
-}
-
-.ct-headerCell :global(.p-column-title) { white-space: nowrap; }
-.ct-filterInput, .ct-filterNumber, .ct-numberInput { width: 100%; }
-.ct-center { text-align: center !important; }
-
-/* For numbers/phones: keep digits LTR but flush right */
-.ct-ltrDigits { direction: ltr; text-align: right; }
-
-/* Expansion panel styling */
-.ct-expansion {
-  padding: 1rem 0.75rem;
-  display: grid;
-  gap: 0.75rem;
-  background: var(--surface-ground, transparent);
-}
-
-/* Mini table of tests inside expander */
-.ct-testsTableWrapper { width: 100%; overflow-x: auto; }
-.ct-testsTable {
-  width: max-content;
-  border-collapse: collapse;
-  border: 1px solid var(--surface-border, #3a4955);
-}
-.ct-testsTable thead th,
-.ct-testsTable tbody td {
-  padding: 0.5rem 0.75rem;
-  border-inline-start: 1px solid var(--surface-border, #3a4955);
-  border-block-start: 1px solid var(--surface-border, #3a4955);
-  white-space: nowrap;
-  text-align: center;
-}
-.ct-testsTable thead th:first-child,
-.ct-testsTable tbody td:first-child { border-inline-start: none; }
-.ct-testsHeaderCell { font-weight: 600; }
-.ct-testsBodyCell { font-variant-numeric: tabular-nums; }
-
-.ct-avgRow { display: flex; gap: 0.5rem; align-items: baseline; }
-.ct-avgLabel { font-weight: 600; }
-.ct-avgValue { direction: ltr; }
-`;
-
-type StudentRow = BaseStudentRow & { testNames?: string[] };
 
 export default function CourseTable() {
-  const [rows, setRows] = useState<StudentRow[]>(initialData as StudentRow[]);
-  const [expandedRows, setExpandedRows] = useState<any>(null);
+  const [expanded, setExpanded] = useState<Record<number, boolean>>({});
+  const [filters, setFilters] = useState({
+    id: "",
+    firstName: "",
+    lastName: "",
+    personalId: "",
+    phone: "",
+    birthday: "",
+    emergencyContact: "",
+    emergencyPhone: "",
+    answersCount: "",
+  });
 
-  const tableClassName = useMemo(() => `ct-wrapper ct-rtl`, []);
+  const [rows, setRows] = useState<Row[]>(
+    Array.from({ length: 30 }, (_, i) => ({
+      id: i + 1,
+      firstName: "שם " + (i + 1),
+      lastName: "משפחה " + (i + 1),
+      personalId: "12345" + i,
+      phone: "050-123456" + i,
+      birthday: "01/01/199" + (i % 10),
+      emergencyContact: "איש קשר " + (i + 1),
+      emergencyPhone: "052-654321" + i,
+      answersCount: i % 5,
+      tests: makeTests(i + 1),
+    }))
+  );
 
-  const getTestNames = (row: StudentRow) => {
-    if (Array.isArray(row.testNames) && row.testNames.length === row.grades?.length) return row.testNames;
-    const len = Array.isArray(row.grades) ? row.grades.length : 0;
-    return Array.from({ length: len }, (_, i) => `מבחן ${i + 1}`);
+  const [editingRowId, setEditingRowId] = useState<number | null>(null);
+  const [draft, setDraft] = useState<Partial<Row> | null>(null);
+
+  const toggle = (id: number) =>
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+
+  const onFilterChange = (key: keyof typeof filters, val: string) =>
+    setFilters((f) => ({ ...f, [key]: val }));
+
+  const filtered = useMemo(() => {
+    const norm = (v: unknown) => String(v ?? "").toLowerCase();
+    return rows.filter((r) => {
+      const checks = [
+        norm(r.id).includes(filters.id.toLowerCase()),
+        norm(r.firstName).includes(filters.firstName.toLowerCase()),
+        norm(r.lastName).includes(filters.lastName.toLowerCase()),
+        norm(r.personalId).includes(filters.personalId.toLowerCase()),
+        norm(r.phone).includes(filters.phone.toLowerCase()),
+        norm(r.birthday).includes(filters.birthday.toLowerCase()),
+        norm(r.emergencyContact).includes(filters.emergencyContact.toLowerCase()),
+        norm(r.emergencyPhone).includes(filters.emergencyPhone.toLowerCase()),
+        norm(r.answersCount).includes(filters.answersCount.toLowerCase()),
+      ];
+      return checks.every(Boolean);
+    });
+  }, [rows, filters]);
+
+  const startEdit = (row: Row) => {
+    setEditingRowId(row.id);
+    setDraft({ ...row, tests: row.tests.map((t) => ({ ...t })) });
+    setExpanded((e) => ({ ...e, [row.id]: true }));
   };
 
-  const rowExpansionTemplate = (data: StudentRow) => {
-    const names = getTestNames(data);
-    const grades = data.grades ?? [];
-    const avg = average(grades);
+  const cancelEdit = () => {
+    setEditingRowId(null);
+    setDraft(null);
+  };
 
-    return (
-      <div className="ct-expansion">
-        <div className="ct-testsTableWrapper">
-          <table className="ct-testsTable">
-            <thead>
-              <tr>
-                {names.map((n, idx) => (
-                  <th key={`h-${idx}`} className="ct-testsHeaderCell">
-                    {n}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {grades.map((g, idx) => (
-                  <td key={`g-${idx}`} className="ct-testsBodyCell">
-                    {g}
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  const saveEdit = () => {
+    if (!draft || editingRowId == null) return;
 
-        <div className="ct-avgRow">
-          <span className="ct-avgLabel">ממוצע מבחנים:</span>
-          <span className="ct-avgValue">{avg || '—'}</span>
-        </div>
-      </div>
+    const phoneOk = (p: string) => /^\d[\d\- ]{5,}$/.test(p || "");
+    const gradesOk =
+      (draft.tests ?? []).every((t) => Number(t.grade) >= 0 && Number(t.grade) <= 100);
+
+    if (!phoneOk(String(draft.phone)) || !phoneOk(String(draft.emergencyPhone))) {
+      alert("מספר טלפון לא תקין");
+      return;
+    }
+    if (!gradesOk) {
+      alert("ציונים חייבים להיות בין 0 ל-100");
+      return;
+    }
+
+    setRows((rs) =>
+      rs.map((r) => (r.id === editingRowId ? { ...(r as Row), ...(draft as Row) } : r))
     );
+    setEditingRowId(null);
+    setDraft(null);
   };
 
-  const textEditor = (options: any) => (
-    <InputText value={options.value ?? ''} onChange={(e) => options.editorCallback(e.target.value)} dir="rtl" />
-  );
-
-  const phoneEditor = (options: any) => (
-    <InputText
-      value={options.value ?? ''}
-      onChange={(e) => options.editorCallback(e.target.value)}
-      dir="rtl"
-      placeholder="טלפון"
-    />
-  );
-
-  const numberEditor = (options: any) => (
-    <InputNumber
-      value={options.value ?? 0}
-      onValueChange={(e) => options.editorCallback(e.value)}
-      inputClassName="ct-numberInput"
-      showButtons
-      buttonLayout="vertical"
-    />
-  );
-
-  const dateEditor = (options: any) => (
-    <Calendar
-      value={options.value ? new Date(options.value) : null}
-      onChange={(e) => options.editorCallback(e.value)}
-      dateFormat={DATE_FORMAT}
-      touchUI
-      placeholder="יום הולדת"
-      showIcon
-      appendTo="self"   // stay inside shadow
-    />
-  );
-
-  const textFilterElement = (options: any) => (
-    <InputText
-      value={options.value ?? ''}
-      onChange={(e) => options.filterCallback(e.target.value, options.index)}
-      placeholder="חיפוש..."
-      dir="rtl"
-      className="ct-filterInput"
-    />
-  );
-
-  const numberFilterElement = (options: any) => (
-    <InputNumber
-      value={options.value ?? null}
-      onValueChange={(e) => options.filterCallback(e.value, options.index)}
-      placeholder="חיפוש מספרי"
-      inputClassName="ct-numberInput"
-      className="ct-filterNumber"
-    />
-  );
-
-  const onRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
-    const { newData, index } = e;
-    const next = [...rows];
-    next[index] = newData as StudentRow;
-    setRows(next);
+  const onDraftChange = <K extends keyof Row>(key: K, value: Row[K]) => {
+    setDraft((d) => ({ ...(d as Row), [key]: value }));
   };
+
+  const onDraftTestChange = (index: number, patch: Partial<Test>) => {
+    setDraft((d) => {
+      const tests = (d?.tests ?? []).map((t, i) => (i === index ? { ...t, ...patch } : t));
+      return { ...(d as Row), tests };
+    });
+  };
+
+  const handleKey = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter") saveEdit();
+      if (e.key === "Escape") cancelEdit();
+    },
+    [saveEdit]
+  );
 
   return (
-    <shadow.div>
-      {/* Load PrimeReact CSS ONLY inside the shadow */}
-      <link rel="stylesheet" href="https://unpkg.com/primereact/resources/themes/vela-green/theme.css" />
-      <link rel="stylesheet" href="https://unpkg.com/primereact/resources/primereact.min.css" />
-      <link rel="stylesheet" href="https://unpkg.com/primeicons/primeicons.css" />
+    <div className={styles.tableWrapper}>
+      {filtered.length === 0 && <div className={styles.emptyState}>לא נמצאו תוצאות</div>}
 
-      {/* Inject our component CSS into the shadow */}
-      <style>{SHADOW_CSS}</style>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>שם פרטי</th>
+            <th>שם משפחה</th>
+            <th>מספר אישי</th>
+            <th>מספר טלפון</th>
+            <th>יום הולדת</th>
+            <th>איש קשר לחירום</th>
+            <th>מספר טלפון איש קשר</th>
+            <th>מספר מענים</th>
+            <th>פעולות</th>
+          </tr>
 
-      <div className={tableClassName} dir="rtl" style={{ minHeight: 0 }}>
-        <DataTable
-          value={rows}
-          dataKey="id"
-          className="ct-table"
-          style={{ width: '100%' }}
-          tableStyle={{ minWidth: '1200px' }}
-          scrollable
-          scrollHeight="flex"
-          filterDisplay="row"
-          editMode="row"
-          onRowEditComplete={onRowEditComplete}
-          resizableColumns
-          columnResizeMode="expand"
-          reorderableColumns
-          expandedRows={expandedRows}
-          onRowToggle={(e) => setExpandedRows(e.data)}
-          rowExpansionTemplate={rowExpansionTemplate}
-          showGridlines
-        >
-          <Column expander header="" bodyClassName="ct-center" headerClassName="ct-center" style={{ width: '3rem' }} />
+          {/* filter row */}
+          <tr className={styles.filterRow}>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.id} onChange={(e)=>onFilterChange("id", e.target.value)} inputMode="numeric" /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.firstName} onChange={(e)=>onFilterChange("firstName", e.target.value)} /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.lastName} onChange={(e)=>onFilterChange("lastName", e.target.value)} /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.personalId} onChange={(e)=>onFilterChange("personalId", e.target.value)} inputMode="numeric" /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.phone} onChange={(e)=>onFilterChange("phone", e.target.value)} inputMode="tel" /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.birthday} onChange={(e)=>onFilterChange("birthday", e.target.value)} /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.emergencyContact} onChange={(e)=>onFilterChange("emergencyContact", e.target.value)} /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.emergencyPhone} onChange={(e)=>onFilterChange("emergencyPhone", e.target.value)} inputMode="tel" /></th>
+            <th><input className={styles.filterInput} placeholder="חיפוש" value={filters.answersCount} onChange={(e)=>onFilterChange("answersCount", e.target.value)} inputMode="numeric" /></th>
+            <th></th>
+          </tr>
+        </thead>
 
-          <Column
-            field="serialNumber"
-            header="מספר סידורי"
-            style={{ width: '10rem', minWidth: '10rem' }}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={textEditor}
-            bodyClassName="ct-ltrDigits"
-            headerClassName="ct-headerCell"
-          />
+        <tbody onKeyDown={handleKey}>
+          {filtered.map((item) => {
+            const isEditing = editingRowId === item.id;
+            const row = isEditing ? (draft as Row) : item;
 
-          <Column
-            field="firstName"
-            header="שם פרטי"
-            style={{ width: '10rem', minWidth: '10rem' }}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={textEditor}
-            headerClassName="ct-headerCell"
-          />
+            const avg =
+              Math.round(
+                (row.tests.reduce((s, t) => s + Number(t.grade || 0), 0) / row.tests.length) * 10
+              ) / 10;
 
-          <Column
-            field="lastName"
-            header="שם משפחה"
-            style={{ width: '10rem', minWidth: '10rem' }}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={textEditor}
-            headerClassName="ct-headerCell"
-          />
+            return (
+              <>
+                <tr key={item.id}>
+                  {/* ID cell — now plain like any other td */}
+                  <td>{item.id}</td>
 
-          <Column
-            field="personalNumber"
-            header="מספר אישי"
-            style={{ width: '10rem', minWidth: '10rem' }}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={textEditor}
-            bodyClassName="ct-ltrDigits"
-            headerClassName="ct-headerCell"
-          />
+                  {/* editable cells */}
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={row.firstName}
+                        onChange={(e) => onDraftChange("firstName", e.target.value)}
+                        autoFocus
+                      />
+                    ) : (
+                      row.firstName
+                    )}
+                  </td>
 
-          <Column
-            field="phone"
-            header="מספר טלפון"
-            style={{ width: '12rem', minWidth: '12rem' }}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={phoneEditor}
-            bodyClassName="ct-ltrDigits"
-            headerClassName="ct-headerCell"
-          />
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={row.lastName}
+                        onChange={(e) => onDraftChange("lastName", e.target.value)}
+                      />
+                    ) : (
+                      row.lastName
+                    )}
+                  </td>
 
-          <Column
-            field="birthday"
-            header="יום הולדת"
-            style={{ width: '12rem', minWidth: '12rem' }}
-            body={(row: StudentRow) => (row.birthday ? new Date(row.birthday).toLocaleDateString('he-IL') : '—')}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={dateEditor}
-            headerClassName="ct-headerCell"
-          />
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={row.personalId}
+                        onChange={(e) => onDraftChange("personalId", e.target.value)}
+                        inputMode="numeric"
+                      />
+                    ) : (
+                      row.personalId
+                    )}
+                  </td>
 
-          <Column
-            field="emergencyContact"
-            header="איש קשר לחירום"
-            style={{ width: '14rem', minWidth: '14rem' }}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={textEditor}
-            headerClassName="ct-headerCell"
-          />
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={row.phone}
+                        onChange={(e) => onDraftChange("phone", e.target.value)}
+                        inputMode="tel"
+                      />
+                    ) : (
+                      row.phone
+                    )}
+                  </td>
 
-          <Column
-            field="emergencyPhone"
-            header="טלפון איש קשר"
-            style={{ width: '12rem', minWidth: '12rem' }}
-            filter
-            filterElement={textFilterElement}
-            sortable
-            editor={phoneEditor}
-            bodyClassName="ct-ltrDigits"
-            headerClassName="ct-headerCell"
-          />
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={row.birthday}
+                        onChange={(e) => onDraftChange("birthday", e.target.value)}
+                      />
+                    ) : (
+                      row.birthday
+                    )}
+                  </td>
 
-          <Column
-            field="answersCount"
-            header="מספר מענים"
-            style={{ width: '10rem', minWidth: '10rem' }}
-            body={(row: StudentRow) => row.answersCount ?? '—'}
-            filter
-            filterElement={numberFilterElement}
-            sortable
-            editor={numberEditor}
-            headerClassName="ct-headerCell"
-          />
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={row.emergencyContact}
+                        onChange={(e) => onDraftChange("emergencyContact", e.target.value)}
+                      />
+                    ) : (
+                      row.emergencyContact
+                    )}
+                  </td>
 
-          <Column rowEditor header="" bodyClassName="ct-center" headerClassName="ct-center" style={{ width: '8rem' }} />
-        </DataTable>
-      </div>
-    </shadow.div>
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={row.emergencyPhone}
+                        onChange={(e) => onDraftChange("emergencyPhone", e.target.value)}
+                        inputMode="tel"
+                      />
+                    ) : (
+                      row.emergencyPhone
+                    )}
+                  </td>
+
+                  <td>
+                    {isEditing ? (
+                      <input
+                        className={styles.editInput}
+                        value={String(row.answersCount)}
+                        onChange={(e) =>
+                          onDraftChange("answersCount", Number(e.target.value) || 0)
+                        }
+                        inputMode="numeric"
+                      />
+                    ) : (
+                      row.answersCount
+                    )}
+                  </td>
+
+                  {/* actions (expander moved here) */}
+                  <td>
+                    <div className={styles.actions}>
+                      <button
+                        type="button"
+                        className={styles.expanderButton}
+                        onClick={() => toggle(item.id)}
+                        aria-expanded={!!expanded[item.id]}
+                        title={expanded[item.id] ? "סגור פרטים" : "פתח פרטים"}
+                      >
+                        {expanded[item.id] ? "−" : "+"}
+                      </button>
+
+                      {isEditing ? (
+                        <>
+                          <button type="button" className={styles.saveBtn} onClick={saveEdit}>
+                            שמירה
+                          </button>
+                          <button type="button" className={styles.cancelBtn} onClick={cancelEdit}>
+                            ביטול
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          type="button"
+                          className={styles.editBtn}
+                          onClick={() => startEdit(item)}
+                          title="עריכה"
+                        >
+                          <FaPen />
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+
+                {/* expanded tests (editable while editing) */}
+                {expanded[item.id] && (
+                  <tr className={styles.expandedRow}>
+                    <td colSpan={10}>
+                      <div className={styles.expandedContent}>
+                        <div className={styles.testsList}>
+                          {row.tests.map((t, idx) => (
+                            <div key={idx} className={styles.testItem}>
+                              {isEditing ? (
+                                <>
+                                  <input
+                                    className={styles.editInput}
+                                    value={t.name}
+                                    onChange={(e) =>
+                                      onDraftTestChange(idx, { name: e.target.value })
+                                    }
+                                  />
+                                  <input
+                                    className={styles.editInput}
+                                    value={String(t.grade)}
+                                    onChange={(e) =>
+                                      onDraftTestChange(idx, {
+                                        grade: Math.max(
+                                          0,
+                                          Math.min(100, Number(e.target.value) || 0)
+                                        ),
+                                      })
+                                    }
+                                    inputMode="numeric"
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  <span className={styles.testName}>{t.name}</span>
+                                  <span className={styles.testGrade}>{t.grade}</span>
+                                </>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                        <div className={styles.testsAvg}>
+                          <span>ממוצע:</span>
+                          <strong>{avg}</strong>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
