@@ -256,3 +256,54 @@
     min-width: 0;
   }
 }
+
+.invalid {
+  border-color: rgba(244,67,54,0.9) !important;
+  box-shadow: 0 0 0 2px rgba(244,67,54,0.25);
+}
+
+.errorText {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #ffb3b3;
+  text-align: right;
+}
+
+.inputWithButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.stepperValue {
+  min-width: 28px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.iconBtn {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  line-height: 1;
+}
+.iconBtn:hover { background: rgba(255,255,255,0.08); }
+.iconBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.saveBtn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: transparent;
+}
