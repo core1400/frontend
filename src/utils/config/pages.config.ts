@@ -1,5 +1,6 @@
 import type { PageConfig } from "../types/navbar.types";
 import  CommonForms from "../../pages/common-forms/CommonForms";
+import CourseInfo from "../../pages/course-info/CourseInfo";
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
   {
@@ -44,5 +45,6 @@ export const pages: PageConfig[] = [
     label: "מידע כללי קורס",
     path: "/course-info",
     roles: ["מפקד", "ממ\"ק"],
+    element: CourseInfo,
   },
 ];
