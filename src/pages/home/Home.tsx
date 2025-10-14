@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './home.module.css';
 import { useMemo } from 'react';
-import { shuffleCreditNames, creditNames } from '../../utils/helpers/homeHelpers';
+import { shuffleCreditNames, creditNames } from '../../utils/helpers-functions/homeHelpers';
 
 const Home: React.FC = () => {
 

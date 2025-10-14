@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./event-modal.module.css";
 import type { EventFormValues } from "../types/event-modal.types";
-import { pad2, toMinutes, COLOR_PALETTE, MAX_DESCRIPTION_CHARS } from "../../../utils/helpers/calendar-helpers";
+import { pad2, toMinutes, COLOR_PALETTE, MAX_DESCRIPTION_CHARS } from "../../../utils/helpers-functions/calendar-helpers";
 
 export function EventModal(props: {
   dateForEvent: Date;

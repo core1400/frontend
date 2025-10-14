@@ -10,7 +10,7 @@ import {
   addDaysSafe,
   formatHourRange,
   HEBREW_DAY_NAMES
-} from "../../utils/helpers/calendar-helpers";
+} from "../../utils/helpers-functions/calendar-helpers";
 
 /** User roles for permissions */
 export type UserRole = "חניך" | "מפקד" | 'ממ"ק';

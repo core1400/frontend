@@ -10,7 +10,6 @@ export const pages: PageConfig[] = [
     label: "לו\"ז שבועי",
     path: "/calender",
     roles: ["חניך", "מפקד", "ממ\"ק"],
-    element: Calendar
   },
   {
     id: "studentRole",

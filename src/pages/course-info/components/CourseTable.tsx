@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback, useRef } from "react";
 import styles from "./course-table.module.css";
 import { FaPen, FaCalendarAlt, FaPlus, FaMinus } from "react-icons/fa";
 import type { Row, Test } from "../types/course-table.types";
-import { makeTests, onlyDigits,formatPhone,validateDraft } from "../../../utils/helpers/courseTableHelpers"
+import { makeTests, onlyDigits,formatPhone,validateDraft } from "../../../utils/helpers-functions/courseTableHelpers"
 
 
 export default function CourseTable() {
