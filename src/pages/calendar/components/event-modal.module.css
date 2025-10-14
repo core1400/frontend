@@ -90,5 +90,28 @@
   padding:10px 12px;
 }
 
+/* ------- תוספות לוולידציית שעות ------- */
+
+/* מחלקה שנוספת לשדות ה-time כאשר הטווח לא תקין */
+.invalid{
+  border-color:#e53935 !important;
+  box-shadow:0 0 0 3px rgba(229,57,53,.15);
+}
+
+/* טקסט אזהרה מתחת לשדות */
+.timeErrorText{
+  color:#e53935;
+  font-size:16px;
+  margin-top:6px;
+}
+
+/* מצב כפתור שמור/הוסף כשהוא כבוי בגלל טווח לא תקין */
+.primaryBtn:disabled{
+  opacity:.65;
+  cursor:not-allowed;
+  filter:none;
+}
+
+/* רספונסיביות */
 @media (max-width:900px){ .colorGrid{ grid-template-columns:repeat(6,1fr); } }
 @media (max-width:640px){ .grid2{ grid-template-columns:1fr; } }
