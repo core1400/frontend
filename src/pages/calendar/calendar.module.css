@@ -37,7 +37,9 @@
   appearance:none; border:1px solid var(--line); background:var(--surface);
   padding:8px 12px; border-radius:10px; font-size:14px; box-shadow:var(--shadow);
 }
-
+label{
+  font-size:24px;
+}
 /* ===== Scroll container (single horizontal scroll on small screens) ===== */
 .calendarScroller{
   border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);

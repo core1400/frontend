@@ -9,11 +9,11 @@ import {
   getWeekStartSunday,
   addDaysSafe,
   formatHourRange,
-} from "../../utils/helper-functions/calendar-helpers";
+  HEBREW_DAY_NAMES
+} from "../../utils/helpers/calendar-helpers";
 
 /** User roles for permissions */
 export type UserRole = "חניך" | "מפקד" | 'ממ"ק';
-const HEBREW_DAY_NAMES = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
 /**
  * Ready for Redux: pass role via prop when available.
  * If not provided, a safe dummy role is used.
@@ -152,7 +152,7 @@ export default function CalendarPage({ role: roleProp }: { role?: UserRole }) {
           </div>
 
           <div className={styles.datePicker}>
-            <label htmlFor="weekDate" className={styles.srOnly}>תאריך: </label>
+            <label htmlFor="weekDate" >תאריך: </label>
             <input id="weekDate" type="date" value={formatYmd(selectedDay)} onChange={handleDateChange} />
           </div>
         </div>
