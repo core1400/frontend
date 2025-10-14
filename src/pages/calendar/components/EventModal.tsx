@@ -1,13 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./event-modal.module.css";
-
-export type EventFormValues = {
-  title: string;
-  description?: string;
-  startTime: string; // "HH:mm"
-  endTime: string;   // "HH:mm"
-  color: string;
-};
+import type { EventFormValues } from "../types/event-modal.types";
+import { pad2, toMinutes } from "../../../utils/helper-functions/calendar-helpers";
 
 const COLOR_PALETTE = [
   "#E6E8FA", "#EFD3F5", "#FAD6E7", "#FFE0F2",
@@ -18,7 +12,6 @@ const COLOR_PALETTE = [
   "#F1E0FF", "#E0D1FF", "#E8F0FF", "#F0F4FF",
 ];
 
-const pad2 = (n: number) => String(n).padStart(2, "0");
 const MAX_DESCRIPTION_CHARS = 300;
 
 export function EventModal(props: {
@@ -50,13 +43,12 @@ export function EventModal(props: {
     }
   );
 
-  /* ---------- textarea autosize (with max) ---------- */
   const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
 
   const autosizeDescription = () => {
     const el = descriptionRef.current;
     if (!el) return;
-    const maxPx = Math.round(window.innerHeight * 0.4); // cap at ~40% of viewport
+    const maxPx = Math.round(window.innerHeight * 0.4); 
     el.style.height = "0px";
     const h = Math.min(el.scrollHeight, maxPx);
     el.style.height = h + "px";
@@ -83,11 +75,14 @@ export function EventModal(props: {
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  const isTimeRangeInvalid =
+    toMinutes(formValues.startTime) >= toMinutes(formValues.endTime);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (readOnly) return onClose();
     if (!formValues.title.trim()) return;
-    if (formValues.endTime <= formValues.startTime) return;
+    if (isTimeRangeInvalid) return; // אל תשמור אם הטווח לא תקין
     onSubmit(formValues);
   };
 
@@ -168,6 +163,8 @@ export function EventModal(props: {
                   type="time"
                   value={formValues.startTime}
                   onChange={(e) => setFormValues((s) => ({ ...s, startTime: e.target.value }))}
+                  className={`${styles.timeInput} ${isTimeRangeInvalid ? styles.invalid : ""}`}
+                  aria-invalid={isTimeRangeInvalid}
                 />
               )}
             </label>
@@ -181,10 +178,16 @@ export function EventModal(props: {
                   type="time"
                   value={formValues.endTime}
                   onChange={(e) => setFormValues((s) => ({ ...s, endTime: e.target.value }))}
+                  className={`${styles.timeInput} ${isTimeRangeInvalid ? styles.invalid : ""}`}
+                  aria-invalid={isTimeRangeInvalid}
                 />
               )}
             </label>
           </div>
+
+          {!readOnly && isTimeRangeInvalid && (
+            <div className={styles.timeErrorText}>שעת התחלה חייבת להיות לפני שעת סיום</div>
+          )}
 
           {/* Color */}
           <div className={styles.field}>
@@ -218,7 +221,11 @@ export function EventModal(props: {
               {onDelete && (
                 <button type="button" className={styles.ghostBtn} onClick={onDelete}>מחק</button>
               )}
-              <button type="submit" className={styles.primaryBtn}>
+              <button
+                type="submit"
+                className={styles.primaryBtn}
+                disabled={isTimeRangeInvalid}
+              >
                 {mode === "edit" ? "שמור" : "הוסף +"}
               </button>
               <button type="button" className={styles.ghostBtn} onClick={onClose}>בטל</button>

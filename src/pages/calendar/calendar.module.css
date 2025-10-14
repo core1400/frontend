@@ -47,7 +47,7 @@
   /* ✅ גלילה אופקית אחת, עם LTR כדי למנוע באגים של RTL בגלילה */
   direction:ltr;
   overflow-x:auto;
-  overflow-y:hidden;
+  overflow-y:auto;
 }
 
 /* הטבלה הפנימית חוזרת ל-RTL כדי שהטקסט יהיה נכון */
@@ -83,7 +83,7 @@
   display:grid;
   /* במסכים צרים: עמודות ברוחב קבוע — תואם ל-Head אחד לאחד */
   grid-template-columns:repeat(7, var(--col-min));
-  min-height:min(70vh, 720px);
+  height:min(70vh, 720px);
 }
 .dayCol{ border-left:1px solid var(--line); padding:12px; position:relative; }
 .dayCol:first-child{ border-right:1px solid var(--line); }

@@ -1,52 +1,19 @@
 import { useMemo, useState } from "react";
 import styles from "./calendar.module.css";
 import { EventModal } from "./components/EventModal";
-import type { EventFormValues } from "./components/EventModal";
+import type { EventFormValues } from "./types/event-modal.types";
+import type { CalendarEvent } from "./types/calendar.types";
+import {
+  zeroPad2,
+  formatYmd,
+  getWeekStartSunday,
+  addDaysSafe,
+  formatHourRange,
+} from "../../utils/helper-functions/calendar-helpers";
 
 /** User roles for permissions */
 export type UserRole = "חניך" | "מפקד" | 'ממ"ק';
-
-/** A single calendar event */
-type CalendarEvent = {
-  id: string;
-  title: string;
-  description?: string;
-  start: Date;
-  end: Date;
-  color: string;
-};
-
-/* -------------------- date/time helpers -------------------- */
-
-const zeroPad2 = (n: number) => String(n).padStart(2, "0");
-
-const formatYmd = (d: Date) =>
-  `${d.getFullYear()}-${zeroPad2(d.getMonth() + 1)}-${zeroPad2(d.getDate())}`;
-
-/** Week starts on Sunday (0) in JS—this returns the Sunday of the given day */
-const getWeekStartSunday = (d: Date) => {
-  const copy = new Date(d);
-  const day = copy.getDay(); // 0..6 (0=Sunday)
-  copy.setDate(copy.getDate() - day);
-  copy.setHours(0, 0, 0, 0);
-  return copy;
-};
-
-const addDaysSafe = (d: Date, days: number) => {
-  const x = new Date(d);
-  x.setDate(x.getDate() + days);
-  return x;
-};
-
 const HEBREW_DAY_NAMES = ["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
-
-const formatHourRange = (start: Date, end: Date) => {
-  const fmt = (t: Date) => `${zeroPad2(t.getHours())}:${zeroPad2(t.getMinutes())}`;
-  return `${fmt(start)} - ${fmt(end)}`;
-};
-
-/* -------------------- component -------------------- */
-
 /**
  * Ready for Redux: pass role via prop when available.
  * If not provided, a safe dummy role is used.
@@ -74,12 +41,10 @@ export default function CalendarPage({ role: roleProp }: { role?: UserRole }) {
     [weekStart]
   );
 
-  // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalDate, setModalDate] = useState<Date | null>(null);
   const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null);
 
-  /* -------------------- handlers -------------------- */
 
   const handleOpenCreateForDay = (day: Date) => {
     if (!canEdit) return;
@@ -187,7 +152,7 @@ export default function CalendarPage({ role: roleProp }: { role?: UserRole }) {
           </div>
 
           <div className={styles.datePicker}>
-            <label htmlFor="weekDate" className={styles.srOnly}>תאריך</label>
+            <label htmlFor="weekDate" className={styles.srOnly}>תאריך: </label>
             <input id="weekDate" type="date" value={formatYmd(selectedDay)} onChange={handleDateChange} />
           </div>
         </div>
@@ -229,7 +194,6 @@ export default function CalendarPage({ role: roleProp }: { role?: UserRole }) {
                       >
                         <div className={styles.eventTitle}>{event.title}</div>
 
-                        {/* per your spec earlier, cadets see the description */}
                         {role === "חניך" && event.description && (
                           <div className={styles.eventDescr}>{event.description}</div>
                         )}
