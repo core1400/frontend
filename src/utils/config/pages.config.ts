@@ -1,6 +1,8 @@
 import type { PageConfig } from "../types/navbar.types";
 import  CommonForms from "../../pages/common-forms/CommonForms";
 import CourseInfo from "../../pages/course-info/CourseInfo";
+import Calendar from "../../pages/calendar/Calendar";
+
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
   {
