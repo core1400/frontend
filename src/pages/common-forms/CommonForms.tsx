@@ -13,7 +13,7 @@ import myxl from '../../assets/test3.xlsx?url';
 
 import DragAndDropFiles from "./components/DragAndDropFiles";
 
-const CommonForms: React.FC = () => {
+export default function CommonForms() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredForms, setFilteredForms] = useState<typeof forms>([]);
 
@@ -77,5 +77,3 @@ const CommonForms: React.FC = () => {
 
   );
 };
-
-export default CommonForms;

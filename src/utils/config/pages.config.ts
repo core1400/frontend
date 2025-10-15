@@ -2,6 +2,7 @@ import type { PageConfig } from "../types/navbar.types";
 import  CommonForms from "../../pages/common-forms/CommonForms";
 import CourseInfo from "../../pages/course-info/CourseInfo";
 import Calendar from "../../pages/calendar/Calendar";
+import Requests from "../../pages/requests/Requests";
 
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
@@ -26,10 +27,11 @@ export const pages: PageConfig[] = [
     element: CommonForms,
   },
   {
-    id: "Bakshatz",
-    label: "בקש\"צ",
-    path: "/bakshatz",
-    roles: ["חניך"],
+    id: "StudentRequests",
+    label: "בקשות חניכים",
+    path: "/student-requests",
+    roles: ["חניך", "מפקד", "ממ\"ק"],
+    element: Requests,
   },
   {
     id: "userManagement",

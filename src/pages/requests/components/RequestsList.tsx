@@ -1,0 +1,146 @@
+import React, { useState } from 'react';
+import styles from '../requests.module.css';
+import type { RequestItem, UserRole } from '../types/requests.types';
+import { isApprover } from '../types/requests.types';
+
+interface Props {
+  title: string;
+  items: RequestItem[];
+  role: UserRole;
+  onDecision?: (id: string, decision: 'approved' | 'rejected') => void;
+  // new: show "טופל" for non-בקשה"צ only when this list is in-progress
+  isInProgressList?: boolean;
+  onHandled?: (id: string) => void;
+  className?: string;
+}
+
+const RequestsList: React.FC<Props> = ({
+  title,
+  items,
+  role,
+  onDecision,
+  isInProgressList,
+  onHandled,
+  className,
+}) => {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const canAct = isApprover(role);
+  const isCommander = role === 'מפקד';
+
+  return (
+    <section className={`${styles.column} ${className ?? ''}`}>
+      <h2 className={styles.columnTitle}>{title}</h2>
+
+      <div className={styles.list}>
+        {items.length === 0 ? (
+          <div className={styles.empty}>אין נתונים</div>
+        ) : (
+          items.map((r) => {
+            const expanded = openId === r.id;
+            const isBaksz = r.type === 'בקש"צ';
+            const approverState = canAct ? r.approvals[role as 'מפקד' | 'ממ"ק'] : 'pending';
+            const canDecide =
+              canAct && isBaksz && r.status === 'in_progress' && approverState === 'pending';
+            const canMarkHandled =
+              isCommander && isInProgressList && !isBaksz && r.status === 'in_progress';
+
+            return (
+              <div key={r.id} className={styles.row}>
+                <button
+                  className={styles.rowHeader}
+                  onClick={() => setOpenId(expanded ? null : r.id)}
+                  aria-expanded={expanded}
+                >
+                  <span className={styles.caret} aria-hidden>
+                    ▾
+                  </span>
+                  <span className={styles.typeChip}>{r.type}</span>
+                  <span className={styles.meta}>
+                    {new Date(r.date).toLocaleDateString('he-IL')}
+                    {isApprover(role) ? ` • ${r.name}` : ''}
+                  </span>
+                </button>
+
+                {expanded && (
+                  <div className={styles.rowDetails}>
+                    {isApprover(role) && (
+                      <>
+                        <div className={styles.detailLine}>
+                          <span className={styles.detailLabel}>שם החניך:</span>
+                          <span>{r.name}</span>
+                        </div>
+                        <div className={styles.detailLine}>
+                          <span className={styles.detailLabel}>מספר אישי:</span>
+                          <span>{r.serial || '-'}</span>
+                        </div>
+                      </>
+                    )}
+
+                    {isBaksz && r.description && (
+                      <div className={styles.detailBlock}>
+                        <span className={styles.detailLabel}>תיאור הבקשה:</span>
+                        <p className={styles.description}>{r.description}</p>
+                      </div>
+                    )}
+
+                    {isBaksz && (
+                      <div className={styles.approvals}>
+                        <span className={`${styles.badge} ${styles[`state_${r.approvals['מפקד']}`]}`}>
+                          מפקד: {badgeText(r.approvals['מפקד'])}
+                        </span>
+                        <span className={`${styles.badge} ${styles[`state_${r.approvals['ממ"ק']}`]}`}>
+                          ממ"ק: {badgeText(r.approvals['ממ"ק'])}
+                        </span>
+                      </div>
+                    )}
+
+                    {canDecide && (
+                      <div className={styles.actions}>
+                        <button
+                          className={`${styles.actionBtn} ${styles.approveBtn}`}
+                          onClick={() => onDecision?.(r.id, 'approved')}
+                        >
+                          אישור
+                        </button>
+                        <button
+                          className={`${styles.actionBtn} ${styles.rejectBtn}`}
+                          onClick={() => onDecision?.(r.id, 'rejected')}
+                        >
+                          סירוב
+                        </button>
+                      </div>
+                    )}
+
+                    {canMarkHandled && (
+                      <div className={styles.actions}>
+                        <button
+                          className={`${styles.actionBtn} ${styles.approveBtn}`}
+                          onClick={() => onHandled?.(r.id)}
+                        >
+                          טופל
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
+    </section>
+  );
+};
+
+function badgeText(state: 'pending' | 'approved' | 'rejected') {
+  switch (state) {
+    case 'approved':
+      return 'אושר';
+    case 'rejected':
+      return 'נדחה';
+    default:
+      return 'ממתין';
+  }
+}
+
+export default RequestsList;
