@@ -4,7 +4,6 @@
   gap: 14px;
 }
 
-/* קו מפריד דק */
 .divider {
   height: 1px;
   background: repeating-linear-gradient(
@@ -17,7 +16,6 @@
   margin: 6px 0;
 }
 
-/* אזור הוספת חניך */
 .addTraineeSection {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -35,7 +33,6 @@
   gap: 10px;
 }
 
-/* כפתור + */
 .addButton {
   width: 44px;
   height: 44px;
@@ -50,7 +47,6 @@
 .addButton:hover { background: #eef8f2; }
 .addButton:active { transform: scale(0.97); }
 
-/* טבלת חניכים – גלילה פנימית */
 .tableContainer {
   margin-top: 6px;
   border: 1px solid #e3efe7;
@@ -114,7 +110,6 @@
   text-overflow: ellipsis;
 }
 
-/* פעולות הטופס */
 .actions {
   display: flex;
   gap: 8px;
@@ -143,7 +138,6 @@
 }
 .secondaryButton:hover { background: #f6fbf8; }
 
-/* chips מתחת לשדה מפקדים */
 .chipsRow {
   display: flex;
   flex-wrap: wrap;

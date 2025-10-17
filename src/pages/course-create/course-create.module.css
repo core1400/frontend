@@ -1,4 +1,3 @@
-/* הכרטיס נשאר בגבולות המסך; אם יש הרבה תוכן – גלילה בתוך הכרטיס */
 .page {
   display: flex;
   justify-content: center;
@@ -11,7 +10,7 @@
   width: 100%;
   max-width: 560px;
   max-height: min(720px, calc(100vh - 140px));
-  overflow: auto;                /* ⬅️ גלילה פנימית */
+  overflow: auto;              
   overscroll-behavior: contain;
   background: rgba(255,255,255,0.97);
   border: 1px solid #e3efe7;

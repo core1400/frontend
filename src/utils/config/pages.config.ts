@@ -17,7 +17,7 @@ export const pages: PageConfig[] = [
     id: "courseCreation",
     label: "יצירת קורס",
     path: "/course-creation",
-    roles: [ "אדמין" ,"חניך","מפקד"],
+    roles: [ "אדמין","מפקד"],
     element: CourseCreate
   },
   {

@@ -1,7 +1,5 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
-// TEMP: reuse page CSS until we split it
 import styles from "./course-creation-form.module.css";
-
 import InputField from "../../../components/common/InputField/InputField";
 import type { Trainee } from "../types/course-types.types";
 import {
@@ -12,18 +10,15 @@ import {
 } from "../../../utils/helpers-functions/course-create-helpers";
 
 export default function CourseCreationForm() {
-  /* Course form state */
   const [courseName, setCourseName] = useState("");
   const [courseNumber, setCourseNumber] = useState("");
   const [commandersRaw, setCommandersRaw] = useState("");
   const [departmentName, setDepartmentName] = useState("");
   const [mmkNumber, setMmkNumber] = useState("");
 
-  /* Trainees */
   const [traineeList, setTraineeList] = useState<Trainee[]>([]);
   const [newTraineePersonalNumber, setNewTraineePersonalNumber] = useState("");
 
-  /* Derived */
   const commanderPersonalNumbers = useMemo(
     () => splitDigitsList(commandersRaw),
     [commandersRaw]
@@ -42,7 +37,6 @@ export default function CourseCreationForm() {
     return { name: null };
   }
 
-  /* Handlers */
   const handleAddTrainee = async () => {
     const pn = newTraineePersonalNumber.trim();
     if (!pn || !/^\d+$/.test(pn)) return; 
@@ -103,7 +97,6 @@ export default function CourseCreationForm() {
 
   return (
     <form className={styles.form} onSubmit={handleSubmitForm} dir="rtl">
-      {/* Course name (טקסט חופשי) */}
       <div>
         <InputField
           label="שם קורס"
@@ -138,7 +131,6 @@ export default function CourseCreationForm() {
         />
       </div>
 
-      {/* Course number – רק ספרות + הודעת שגיאה */}
       <div>
         <InputField
           label="מספר קורס (לדוגמה: 1400)"
@@ -159,7 +151,6 @@ export default function CourseCreationForm() {
         )}
       </div>
 
-      {/* Commanders – רק ספרות/רווחים/פסיקים + chips + שגיאה */}
       <div>
         <InputField
           label="מספרים אישיים של מפקדים (מופרדים בפסיק/רווח)"
@@ -247,7 +238,6 @@ export default function CourseCreationForm() {
         )}
       </div>
 
-      {/* Table (scrollable) */}
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>
@@ -293,13 +283,16 @@ export default function CourseCreationForm() {
       </div>
 
       <div className={styles.actions}>
-        <button type="submit" className={styles.primaryButton}>
+        <button type="submit" 
+        className={styles.primaryButton} 
+        onClick={handleResetForm}         
+        >
           שמור קורס
         </button>
         <button
           type="button"
           className={styles.secondaryButton}
-          onClick={handleResetForm}
+          onClick={handleResetForm}         
         >
           אפס טופס
         </button>
