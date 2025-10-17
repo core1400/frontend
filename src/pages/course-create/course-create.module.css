@@ -1,0 +1,209 @@
+/* הכרטיס נשאר בגבולות המסך; אם יש הרבה תוכן – גלילה בתוך הכרטיס */
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  min-height: calc(100vh - 64px);
+}
+
+.card {
+  width: 100%;
+  max-width: 560px;
+  max-height: min(720px, calc(100vh - 140px));
+  overflow: auto;                /* ⬅️ גלילה פנימית */
+  overscroll-behavior: contain;
+  background: rgba(255,255,255,0.97);
+  border: 1px solid #e3efe7;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 6px 18px rgba(16,78,54,0.08);
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 18px;              
+  font-weight: 800;
+  color: #1f4d3a;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px; 
+}
+/* קו מפריד דק */
+.divider {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to left,
+    #b5d3c2,
+    #b5d3c2 12px,
+    transparent 12px,
+    transparent 20px
+  );
+  margin: 6px 0;
+}
+
+/* אזור הוספת חניך – מיושר וגדול מספיק */
+.addTraineeSection {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 12px;
+  align-items: center;
+}
+
+.addLabel {
+  font-weight: 800;
+  color: #2a5a45;
+  font-size: 16px;
+}
+
+.addControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* כפתור + — ברור ונקי */
+.addButton {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid #79ba96;
+  background: #ffffff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.05s ease-in, background 0.2s;
+}
+.addButton:hover { background: #eef8f2; }
+.addButton:active { transform: scale(0.97); }
+
+/* טבלת חניכים – גלילה פנימית */
+.tableContainer {
+  margin-top: 6px;
+  border: 1px solid #e3efe7;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  direction: rtl;
+  font-size: 14px;
+  table-layout: fixed;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  text-align: center;      
+  font-weight: 700;
+  padding: 10px 14px;
+  background: #f3faf6;
+  color: #2a5a45;
+  border-bottom: 1px solid #e3efe7;
+  vertical-align: middle;
+}
+
+/* גובה גלילה נוח — לא בורח */
+.tableBodyScroll {
+  max-height: clamp(140px, 28vh, 260px);
+  overflow-y: auto;
+}
+
+.table tbody td {
+  padding: 10px 14px;
+  border-top: 1px solid #f1f1f1;
+  background: #fff;
+  vertical-align: middle;
+  text-align: center;      
+}
+
+.removeButton {
+  border: none;
+  background: #ffecec;
+  color: #b44848;
+  border: 1px solid #ffd1d1;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;              
+  align-items: center;       
+  justify-content: center;
+  height: 30px;               
+  box-sizing: border-box;
+}
+.removeButton:hover {
+  background: #ffe3e3;
+}
+
+.mono {
+  font-family: ui-monospace, monospace;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.primaryButton,
+.secondaryButton {
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.primaryButton {
+  border: none;
+  background: #2ea269;
+  color: white;
+  box-shadow: 0 4px 10px rgba(46,162,105,0.18);
+}
+.primaryButton:hover { filter: brightness(1.07); }
+
+.secondaryButton {
+  border: 1px solid #b9d9c6;
+  background: #ffffff;
+  color: #2a5a45;
+}
+.secondaryButton:hover { background: #f6fbf8; }
+
+/* ...שאר הקובץ כמו אצלך... */
+
+/* chips מסודרים מתחת לשדה מפקדים */
+.chipsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.chip {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px dashed #b9d9c6;
+  background: #f7fbf9;
+  color: #2a5a45;
+}
+
+/* טקסט שגיאה קצר ואחיד */
+.errorText {
+  border: 2px solid purple;
+  color: #e06666;
+  font-size: 12px;
+}
