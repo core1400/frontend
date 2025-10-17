@@ -2,7 +2,11 @@ import React from "react";
 import type { InputFieldProps } from "../../../utils/types/input-field.types";
 import styles from "./input-field.module.css";
 
-const InputField: React.FC<InputFieldProps> = ({
+/**
+ * שדה קלט דינאמי עם עיצוב וסטייל משתנים.
+ * תומך בכל הפרופס הקיימים + required אופציונלי.
+ */
+const InputField: React.FC<InputFieldProps & { required?: boolean }> = ({
   label,
   type = "text",
   value,
@@ -13,8 +17,8 @@ const InputField: React.FC<InputFieldProps> = ({
   width,
   height,
   textSize,
+  required = true
 }) => {
-
   return (
     <div
       className={styles.formControl}
@@ -36,7 +40,7 @@ const InputField: React.FC<InputFieldProps> = ({
         type={type}
         value={value}
         onChange={onChange}
-        required
+        required={required}
         autoComplete="off"
       />
 

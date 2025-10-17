@@ -2,6 +2,7 @@ import type { PageConfig } from "../types/navbar.types";
 import  CommonForms from "../../pages/common-forms/CommonForms";
 import CourseInfo from "../../pages/course-info/CourseInfo";
 import Calendar from "../../pages/calendar/Calendar";
+import CourseCreate from "../../pages/course-create/CourseCreate";
 
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
@@ -13,10 +14,11 @@ export const pages: PageConfig[] = [
     element: Calendar
   },
   {
-    id: "studentRole",
-    label: "חנתר וא' כיתה",
-    path: "/student-roles",
-    roles: ["מפקד"],
+    id: "courseCreation",
+    label: "יצירת קורס",
+    path: "/course-creation",
+    roles: [ "אדמין","מפקד"],
+    element: CourseCreate
   },
   {
     id: "commonForms",
