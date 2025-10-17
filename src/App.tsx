@@ -6,6 +6,8 @@ import Navbar from './components/layout/Navbar';
 import PagePlaceholder from './components/common/page-placeholder/PagePlaceholder';
 import { pages } from './utils/config/pages.config';
 import Home from './pages/home/Home';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const location = useLocation();
@@ -43,6 +45,19 @@ function App() {
 
         <Route path="/" element={<Navigate to="/home" replace />} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        newestOnTop
+        rtl
+        theme="colored"                               // 👈 solid color per type
+        toastStyle={{                                  // 👈 smaller text + rounded, no shadow
+          fontSize: '13px',
+          borderRadius: '8px',
+          boxShadow: 'none',
+        }}
+      />
+      
     </div>
   );
 }

@@ -102,80 +102,6 @@
   min-width: 0;
 }
 
-.expanderButton {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.35);
-  background: transparent;
-  color: #fff;
-  cursor: pointer;
-  line-height: 1;
-  font-size: 16px;
-}
-.expanderButton:hover {
-  background: rgba(255,255,255,0.08);
-}
-
-.expandedRow td {
-  padding: 0;
-  border-top: none;
-}
-
-.expandedContent {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  background: #1b2738;
-  padding: 12px 16px;
-  text-align: right;
-}
-
-.testsList {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 8px 16px;
-  width: 100%;
-}
-
-.testItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  background: rgba(255,255,255,0.04);
-  min-width: 0;
-}
-.testName { 
-  opacity: 0.9; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.testGrade { 
-  font-weight: 700; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.testsAvg {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 6px;
-  background: rgba(76, 175, 80, 0.15);
-  border: 1px solid rgba(76, 175, 80, 0.35);
-}
-.testsAvg strong { font-size: 16px; }
-
 .emptyState {
   position: absolute;
   inset: 0;
@@ -308,17 +234,13 @@
   background: transparent;
 }
 
-/* row highlighting for roles */
 .hanterRow {
-  /* subtle green tint */
   background: linear-gradient(0deg, rgba(76,175,80,0.10), rgba(76,175,80,0.10));
 }
 .akitaRow {
-  /* subtle blue tint */
   background: linear-gradient(0deg, rgba(33,150,243,0.10), rgba(33,150,243,0.10));
 }
 
-/* small role chips next to the name */
 .roleBadge {
   display: inline-block;
   margin-inline-start: 6px;
@@ -339,7 +261,6 @@
   border-color: rgba(33,150,243,0.45);
 }
 
-/* role buttons in actions */
 .roleBtn {
   padding: 4px 8px;
   border-radius: 6px;
@@ -360,7 +281,7 @@
 
 .table th:last-child,
 .table td:last-child {
-  min-width: 200px; /* force actual visible width */
+  min-width: 200px;
   width: 200px;
   flex-shrink: 0;
 }
@@ -371,6 +292,25 @@
   justify-content: flex-start;
   margin: 8px auto 12px;
   width: 94%;
+}
+
+.adminCourseInput {
+  margin-inline-start: auto;
+  height: 32px;
+  min-width: 220px;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: #24344a;
+  color: #fff;
+  padding: 4px 10px;
+  font-size: 13px;
+  text-align: right;
+}
+.adminCourseInput::placeholder { color: rgba(255,255,255,0.6); }
+.adminCourseInput:focus {
+  border-color: #9ecbff;
+  box-shadow: 0 0 0 2px rgba(158,203,255,0.25);
+  outline: none;
 }
 
 .addBtn {
@@ -399,9 +339,26 @@
   font-size: 12px;
   text-align: right;
 }
+
+.roleSelect option{
+  background-color: #2a3a52;
+}
 .roleSelect:focus {
   border-color: #9ecbff;
   box-shadow: 0 0 0 2px rgba(158,203,255,0.25);
   outline: none;
+}
+
+.deleteBtn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(244,67,54,0.8);
+  background: rgba(244,67,54,0.15);
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+}
+.deleteBtn:hover {
+  background: rgba(244,67,54,0.25);
 }
 

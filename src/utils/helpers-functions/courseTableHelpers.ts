@@ -1,13 +1,4 @@
-import type { Test, Row } from "../../pages/course-info/types/course-table.types";
-
-export function makeTests(seed: number): Test[] {
-  const base = (n: number) => ((seed * 17 + n * 29) % 41) + 60; // 60–100
-  return [
-    { name: "מבחן 1", grade: base(1) },
-    { name: "מבחן 2", grade: base(2) },
-    { name: "מבחן 3", grade: base(3) },
-  ];
-}
+import type {Row, PersonRole } from "../../pages/course-info/types/course-table.types";
 
 /* ---------- helpers ---------- */
 export const onlyDigits = (s: string) => s.replace(/\D+/g, "");
@@ -70,16 +61,28 @@ export const validateDraft = (d: Partial<Row> | null) => {
     }
   }
 
-  // tests: שם מבחן לא ריק וציונים בין 0–100
-  if (Array.isArray(d.tests)) {
-    const hasEmptyName = d.tests.some((t) => isEmpty(t.name));
-    if (hasEmptyName) e.testsName = "שם מבחן לא יכול להיות ריק";
-
-    const badGrade = d.tests.some((t) => Number(t.grade) < 0 || Number(t.grade) > 100);
-    if (badGrade) e.tests = "ציונים בין 0 ל-100";
-  }
-
   return e;
 };
+
+// ../constants/course-table.constants.ts
+export const ROLE_PRIORITY: Record<PersonRole, number> = {
+  'ממ"ק': 0,
+  'מפקד': 1,
+  'חניך': 2,
+};
+
+export const buildInitialRows = (): Row[] =>
+  Array.from({ length: 30 }, (_, i) => ({
+    id: i + 1,
+    firstName: "שם " + (i + 1),
+    lastName: "משפחה " + (i + 1),
+    personalId: "12345" + i,
+    phone: "050-123456" + i, // (mask fixes when editing)
+    birthday: "199" + (i % 10) + "-01-01",
+    emergencyContact: "איש קשר " + (i + 1),
+    emergencyPhone: "052-654321" + i,
+    answersCount: i % 5,
+    courseId: 1000 + (i % 3),
+  }));
 
   
