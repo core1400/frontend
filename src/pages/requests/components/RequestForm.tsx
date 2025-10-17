@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import styles from '../requests.module.css';
+import styles from './request-form.module.css';
 import type { RequestItem, RequestType } from '../types/requests.types';
 
 const REQUEST_TYPES: RequestType[] = ['בקש"צ', 'חופ"ל', 'ת"ש', 'קפ"ס'];

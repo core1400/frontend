@@ -36,8 +36,9 @@ const RequestsList: React.FC<Props> = ({
           <div className={styles.empty}>אין נתונים</div>
         ) : (
           items.map((r) => {
-            const expanded = openId === r.id;
             const isBaksz = r.type === 'בקש"צ';
+            const canExpand = role === 'מפקד' || isBaksz;
+            const expanded = canExpand && openId === r.id;
             const approverState = canAct ? r.approvals[role as 'מפקד' | 'ממ"ק'] : 'pending';
             const canDecide =
               canAct && isBaksz && r.status === 'in_progress' && approverState === 'pending';
@@ -48,12 +49,19 @@ const RequestsList: React.FC<Props> = ({
               <div key={r.id} className={styles.row}>
                 <button
                   className={styles.rowHeader}
-                  onClick={() => setOpenId(expanded ? null : r.id)}
-                  aria-expanded={expanded}
+                  onClick={() => {
+                    if (!canExpand) return;
+                    setOpenId(expanded ? null : r.id);
+                  }}
+                  aria-expanded={canExpand ? expanded : undefined}
+                  aria-disabled={!canExpand}
+                  disabled={!canExpand}
                 >
-                  <span className={styles.caret} aria-hidden>
-                    ▾
-                  </span>
+                  {canExpand && (
+                    <span className={styles.caret} aria-hidden>
+                      ▾
+                    </span>
+                  )}
                   <span className={styles.typeChip}>{r.type}</span>
                   <span className={styles.meta}>
                     {new Date(r.date).toLocaleDateString('he-IL')}

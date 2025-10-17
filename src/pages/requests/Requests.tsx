@@ -34,7 +34,7 @@ export default function Requests({ role: userRole }: { role?: UserRole }) {
   // Role-based visibility:
   // - ממ"ק: see only בקש"צ
   // - מפקד: see all
-  // - others: unchanged
+  // - חניך: see all
   const filterByRole = (arr: RequestItem[]) => {
     if (role === 'ממ"ק') return arr.filter((i) => i.type === 'בקש"צ');
     return arr;
