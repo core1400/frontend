@@ -49,7 +49,7 @@ export const pages: PageConfig[] = [
     id: "courseInfo",
     label: "מידע כללי קורס",
     path: "/course-info",
-    roles: ["מפקד", "ממ\"ק"],
+    roles: ["מפקד", "ממ\"ק","אדמין"],
     element: CourseInfo,
   },
 ];
