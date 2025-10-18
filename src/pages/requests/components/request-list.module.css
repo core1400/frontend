@@ -1,0 +1,86 @@
+.column {
+  background: #fff;
+  border: 2px solid #1f1f1f;
+  border-radius: 24px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.columnTitle {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 16px 20px;
+  border-bottom: 2px solid #1f1f1f;
+}
+
+.list { padding: 8px 6px 16px; }
+.empty { padding: 20px; color: #8d8d8d; }
+
+.row { border-bottom: 1px solid #eee; }
+.rowHeader {
+  width: 100%;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.caret {
+  transform: rotate(90deg);
+  transition: transform 0.15s ease;
+  margin-inline-start: 4px;
+  font-size: large;
+}
+.rowHeader[aria-expanded="true"] .caret { transform: rotate(0deg); }
+
+.typeChip {
+  background: #eef2ff;
+  border: 1px solid #d9e1ff;
+  color: #334155;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.meta { color: #111; }
+
+.rowDetails {
+  padding: 0 16px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detailLine { display: flex; gap: 8px; }
+.detailBlock { display: flex; flex-direction: column; gap: 4px; }
+.detailLabel { color: #64748b; font-weight: 600; }
+.description { margin: 0; }
+
+.approvals { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.badge {
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 13px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+}
+.state_pending { background: #fff7ed; border-color: #fed7aa; color: #9a3412; }
+.state_approved { background: #ecfdf5; border-color: #86efac; color: #065f46; }
+.state_rejected { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+
+.actions { display: flex; gap: 8px; margin-top: 6px; }
+.actionBtn {
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+.approveBtn { background: #16a34a; color: #fff; }
+.rejectBtn { background: #ef4444; color: #fff; }
