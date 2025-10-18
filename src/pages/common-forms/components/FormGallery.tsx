@@ -23,7 +23,6 @@ const FormGallery: React.FC<FormGalleryProps> = ( { forms } ) => {
 
         const ext = getFileExtension(fileUrl);
 
-        // Directly use the image for common image types
         if (["jpg", "jpeg", "png", "gif", "bmp", "webp", "svg"].includes(ext)) {
           if (!cancelled) {
             setPreviews((prev) => ({ ...prev, [fileUrl]: fileUrl }));

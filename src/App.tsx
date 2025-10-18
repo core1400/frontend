@@ -1,6 +1,5 @@
 import './styles/App.css';
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom';
-
 import Login from './pages/login/Login';
 import Navbar from './components/layout/Navbar';
 import PagePlaceholder from './components/common/page-placeholder/PagePlaceholder';
@@ -13,7 +12,6 @@ function App() {
   const location = useLocation();
   const showNavbar: boolean = location.pathname !== '/login';
   
-
   return (
     <div className="App">
       {showNavbar && <Navbar />}
@@ -22,7 +20,6 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         
-        {/* As of branch feature/routes using placeholders for pages */}
         {pages.map((p) => {
           const Element = p.element;
           return (
@@ -50,8 +47,8 @@ function App() {
         autoClose={3000}
         newestOnTop
         rtl
-        theme="colored"                               // 👈 solid color per type
-        toastStyle={{                                  // 👈 smaller text + rounded, no shadow
+        theme="colored"
+        toastStyle={{
           fontSize: '13px',
           borderRadius: '8px',
           boxShadow: 'none',

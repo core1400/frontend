@@ -2,10 +2,6 @@ import React from "react";
 import type { InputFieldProps } from "../../../utils/types/input-field.types";
 import styles from "./input-field.module.css";
 
-/**
- * שדה קלט דינאמי עם עיצוב וסטייל משתנים.
- * תומך בכל הפרופס הקיימים + required אופציונלי.
- */
 const InputField: React.FC<InputFieldProps & { required?: boolean }> = ({
   label,
   type = "text",

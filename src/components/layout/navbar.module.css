@@ -107,14 +107,12 @@
   transition: background-color 0.2s ease;
 }
 
-/* Hover/press */
 .sidebar a:hover,
 .sidebar a:active {
   background-color: #67b5397a;
   outline: none;
 }
 
-/* Keyboard focus */
 .sidebar a:focus{
   background-color: #489d18a1;
   border-bottom: 2px solid #e8f7dd;
@@ -170,7 +168,6 @@
 
 .menuButton { display: block; }
 
-/* RESPONSIVE */
 @media (max-width: 800px) {
   .menuButton { display: block; }
 }

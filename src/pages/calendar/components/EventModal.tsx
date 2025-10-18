@@ -71,7 +71,7 @@ export function EventModal(props: {
     e.preventDefault();
     if (readOnly) return onClose();
     if (!formValues.title.trim()) return;
-    if (isTimeRangeInvalid) return; // אל תשמור אם הטווח לא תקין
+    if (isTimeRangeInvalid) return;
     onSubmit(formValues);
   };
 

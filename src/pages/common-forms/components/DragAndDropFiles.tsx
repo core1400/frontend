@@ -98,9 +98,7 @@ const DragAndDropFiles: React.FC = () => {
             {files.length > 0 && (
                 <button 
                     className={styles.submitBtn}
-                    onClick={() => {
-                        // push files to the forms gallery (you need to save the files in assets folder)
-                        
+                    onClick={() => {     
                         setFiles([]);
                     }}
                 >

@@ -30,7 +30,6 @@
   white-space: pre-wrap;        
 }
 
-/* Background layer: dark gradient + depth/glow */
 .cardBackdrop {
   position: absolute;
   inset: 0;
@@ -43,7 +42,6 @@
   z-index: 0;
 }
 
-/* form content */
 .loginForm {
   position: relative;
   display: flex;
@@ -60,7 +58,6 @@
   transition: border-color .25s ease, box-shadow .25s ease;
 }
 
-/* Neon ring on hover/focus */
 .loginForm::before {
   content: "";
   position: absolute;
@@ -91,7 +88,6 @@
   filter: blur(12px);
 }
 
-/* Title */
 .loginTitle {
   text-align: center;
   margin-bottom: 20px;
@@ -109,14 +105,12 @@
     0 0 18px rgba(255, 255, 255, 0.7);
 }
 
-/* Actions row (button area) */
 .actions {
   display: flex;
   justify-content: center;
   margin-top: auto;
 }
 
-/* Primary submit button */
 .submitButton {
   width: 260px;
   height: 56px;
@@ -154,7 +148,6 @@
   outline-offset: 3px;
 }
 
-/* Tablet fixed size */
 @media (max-width: 900px) {
   .loginCard {
     width: 440px;
