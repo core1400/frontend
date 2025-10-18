@@ -17,13 +17,10 @@ const Home: React.FC = () => {
         </h1>
 
         <p className={styles.lead}>
-          CORE היא מערכת המסייעת למפקד קורס לנהל לוגיסטיקה, לעקוב אחר חניכי הקורס , וקביעת לו"ז" במקום אחד נקי ופשוט - 
+          CORE היא מערכת המסייעת למפקד קורס לנהל לוגיסטיקה, לעקוב אחר חניכי הקורס , וקביעת לו"ז במקום אחד נקי ופשוט - 
           כך שתוכלו להתמקד בלימוד והובלה ולא בבירוקרטיה!
         </p>
 
-        <button type="button" className={styles.cta}>
-          ירוק בעיניים
-        </button>
       </section>
       <section className={styles.typewrap}>
         <div className={styles.text}>כאן הופכים קורס לצוות.</div>

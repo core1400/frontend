@@ -58,7 +58,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg })
 
         <div className={styles.actions}>
           <button type="submit" className={styles.submitButton} disabled={loading}>
-            {loading ? "מבצע התחברות..." : "Login"}
+            {loading ? "מבצע התחברות..." : "התחברות"}
           </button>
         </div>
       </form>
