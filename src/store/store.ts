@@ -3,7 +3,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import sessionStorage from 'redux-persist/lib/storage/session'; 
 import { authReducer } from './authslice';
 
-// Persist config (customize whitelist/blacklist later)
+// Persist config
 const persistConfig = {
   key: 'root',
   storage: sessionStorage, 
@@ -16,7 +16,6 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
   },
-  // devTools: import.meta.env.MODE !== 'production',
 });
 
 export const persistor = persistStore(store);

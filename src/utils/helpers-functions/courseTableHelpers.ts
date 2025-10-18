@@ -1,6 +1,5 @@
 import type {Row, PersonRole } from "../../pages/course-info/types/course-table.types";
 
-/* ---------- helpers ---------- */
 export const onlyDigits = (s: string) => s.replace(/\D+/g, "");
 
 export const formatPhone = (s: string) => {
@@ -25,7 +24,6 @@ export const validateDraft = (d: Partial<Row> | null) => {
 
   const isEmpty = (v: unknown) => String(v ?? "").trim().length === 0;
 
-  // --- שדות חובה ---
   if (typeof d.firstName === "string" && isEmpty(d.firstName)) {
     e.firstName = "שם פרטי הוא שדה חובה";
   }
@@ -35,26 +33,18 @@ export const validateDraft = (d: Partial<Row> | null) => {
   if (typeof d.emergencyContact === "string" && isEmpty(d.emergencyContact)) {
     e.emergencyContact = "איש קשר לחירום הוא שדה חובה";
   }
-
-  // personalId: ספרות בלבד
   if (typeof d.personalId === "string" && !/^\d+$/.test(d.personalId)) {
     e.personalId = "ספרות בלבד";
   }
-
-  // phones: xxx-xxxxxxx
   if (typeof d.phone === "string" && !isValidPhone(d.phone)) {
     e.phone = "מבנה נדרש: xxx-xxxxxxx";
   }
   if (typeof d.emergencyPhone === "string" && !isValidPhone(d.emergencyPhone)) {
     e.emergencyPhone = "מבנה נדרש: xxx-xxxxxxx";
   }
-
-  // birthday: yyyy-mm-dd תקין
   if (typeof d.birthday === "string" && !isValidISODate(d.birthday)) {
     e.birthday = "תאריך לא תקין (yyyy-mm-dd)";
   }
-
-  // answersCount: מספר שלם >= 0
   if (typeof d.answersCount === "number") {
     if (!Number.isInteger(d.answersCount) || d.answersCount < 0) {
       e.answersCount = "מספר שלם, 0 ומעלה";
@@ -64,7 +54,6 @@ export const validateDraft = (d: Partial<Row> | null) => {
   return e;
 };
 
-// ../constants/course-table.constants.ts
 export const ROLE_PRIORITY: Record<PersonRole, number> = {
   'ממ"ק': 0,
   'מפקד': 1,
@@ -77,7 +66,7 @@ export const buildInitialRows = (): Row[] =>
     firstName: "שם " + (i + 1),
     lastName: "משפחה " + (i + 1),
     personalId: "12345" + i,
-    phone: "050-123456" + i, // (mask fixes when editing)
+    phone: "050-123456" + i,
     birthday: "199" + (i % 10) + "-01-01",
     emergencyContact: "איש קשר " + (i + 1),
     emergencyPhone: "052-654321" + i,

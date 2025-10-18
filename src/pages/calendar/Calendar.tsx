@@ -14,10 +14,7 @@ import {
 
 /** User roles for permissions */
 export type UserRole = "חניך" | "מפקד" | 'ממ"ק';
-/**
- * Ready for Redux: pass role via prop when available.
- * If not provided, a safe dummy role is used.
- */
+
 export default function CalendarPage({ role: roleProp }: { role?: UserRole }) {
   const role: UserRole = roleProp ?? DEFAULT_USER_ROLE;
   const canEdit = role !== "חניך";
@@ -136,8 +133,6 @@ export default function CalendarPage({ role: roleProp }: { role?: UserRole }) {
     setSelectedDay(new Date(y, m - 1, d));
   };
 
-  /* -------------------- render -------------------- */
-
   return (
     <div className={styles.calendarPage} dir="rtl">
       <header className={styles.calendarHeader}>
@@ -158,7 +153,6 @@ export default function CalendarPage({ role: roleProp }: { role?: UserRole }) {
         </div>
       </header>
 
-      {/* single horizontal scroll for narrow screens */}
       <section className={styles.calendarScroller}>
         <div className={styles.calendarTable}>
           {/* Head row */}

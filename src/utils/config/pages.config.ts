@@ -5,7 +5,7 @@ import Calendar from "../../pages/calendar/Calendar";
 import Requests from "../../pages/requests/Requests";
 import CourseCreate from "../../pages/course-create/CourseCreate";
 
-// Central config for all navbar/sidebar pages
+// Central config for all sidebar pages
 export const pages: PageConfig[] = [
   {
     id: "calender",
@@ -18,7 +18,7 @@ export const pages: PageConfig[] = [
     id: "courseCreation",
     label: "יצירת קורס",
     path: "/course-creation",
-    roles: [ "אדמין","מפקד"],
+    roles: [ "אדמין"],
     element: CourseCreate
   },
   {
@@ -34,18 +34,6 @@ export const pages: PageConfig[] = [
     path: "/student-requests",
     roles: ["חניך", "מפקד", "ממ\"ק"],
     element: Requests,
-  },
-  {
-    id: "userManagement",
-    label: "ניהול משתמשים",
-    path: "/user-managment",
-    roles: ["אדמין"],
-  },
-  {
-    id: "exams",
-    label: "ניהול מבחנים",
-    path: "/exams",
-    roles: ["מפקד"],
   },
   {
     id: "courseInfo",

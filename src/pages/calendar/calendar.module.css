@@ -7,8 +7,6 @@
   --accent-1:#71d78f;
   --accent-2:#49c07a;
   --shadow:0 10px 24px rgba(15,49,38,.08);
-
-  /* רוחב עמודה מינימלי למסכים צרים */
   --col-min: 180px;
 }
 :global(.sr-only){
@@ -20,7 +18,6 @@
 }
 .calendarPage{ padding:24px; color:var(--brand-ink); }
 
-/* ===== Header ===== */
 .calendarHeader{
   display:flex; align-items:center; justify-content:space-between;
   gap:16px; margin-bottom:16px;
@@ -40,31 +37,24 @@
 label{
   font-size:24px;
 }
-/* ===== Scroll container (single horizontal scroll on small screens) ===== */
 .calendarScroller{
   border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
   background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.75));
   backdrop-filter:blur(2px);
-
-  /* ✅ גלילה אופקית אחת, עם LTR כדי למנוע באגים של RTL בגלילה */
   direction:ltr;
   overflow-x:auto;
   overflow-y:auto;
 }
 
-/* הטבלה הפנימית חוזרת ל-RTL כדי שהטקסט יהיה נכון */
 .calendarTable{
   display:grid;
   grid-template-rows:auto 1fr;
   direction:rtl;
-  /* במסכים צרים – רוחב קבוע: 7 עמודות * col-min */
   width: calc(7 * var(--col-min));
 }
 
-/* ===== Head (sticky) ===== */
 .calendarHeadRow{
   display:grid;
-  /* במסכים צרים: עמודות ברוחב קבוע */
   grid-template-columns:repeat(7, var(--col-min));
   border-bottom:1px solid var(--line);
   background:var(--surface-2);
@@ -80,10 +70,8 @@ label{
 .dayName{ font-weight:700; }
 .dayDate{ font-size:12px; color:var(--brand-ink-weak); }
 
-/* ===== Body ===== */
 .calendarColumns{
   display:grid;
-  /* במסכים צרים: עמודות ברוחב קבוע — תואם ל-Head אחד לאחד */
   grid-template-columns:repeat(7, var(--col-min));
   height:min(70vh, 720px);
 }
@@ -91,14 +79,11 @@ label{
 .dayCol:first-child{ border-right:1px solid var(--line); }
 
 .eventBtnWrap{ border:none; background:transparent; padding:0; width:100%; text-align:inherit; }
-/* הכרטיס עצמו תומך בעטיפה של טקסטים ארוכים */
 .eventCard{
   display:block; width:100%;
   border-radius:12px; padding:12px 14px; margin-bottom:10px;
   box-shadow:0 4px 10px rgba(0,0,0,.08); border:1px solid rgba(0,0,0,.05);
   text-align:right; cursor:pointer;
-
-  /* עטיפה חכמה */
   white-space:pre-wrap;
   overflow-wrap:anywhere;
   word-break:break-word;
@@ -114,10 +99,9 @@ label{
   overflow-wrap:anywhere; word-break:break-word; white-space:pre-wrap; hyphens:auto;
 }
 
-/* ===== Large screens – no horizontal scroll, columns stretch evenly ===== */
 @media (min-width: 980px){
   .calendarScroller{
-    overflow-x:hidden; /* אין גלילה אופקית */
+    overflow-x:hidden;
   }
   .calendarTable{
     width:100%;

@@ -114,7 +114,6 @@ const Navbar: React.FC = () => {
 
         <li className={styles.sidebarDivider} aria-hidden="true"></li>
 
-        {/* Sign out button (no actual logic yet) */}
         <li>
           <button
             type="button"

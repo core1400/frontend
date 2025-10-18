@@ -2,9 +2,9 @@
   --accent:#22c55e;
 
   /* typewriter vars*/
-  --typeColor:#0f766e; /* text + caret color */
+  --typeColor:#0f766e;
   --chars:18; /* number of visible characters in the line */
-  --loop:4.8s; /* full cycle: type → hold → erase */
+  --loop:4.8s;
 
    /* gradient for credit*/
   --gradA:#22c55e; 
@@ -22,7 +22,6 @@
   position:relative;
 }
 
-/* ---------- top intro card ---------- */
 .content{
   max-width:920px;
   width:100%;
@@ -99,12 +98,10 @@
     cursor .6s step-end infinite;
 }
 
-/* caret blink */
 @keyframes cursor{
   50%{ border-color:transparent }
 }
 
-/* Type → hold → erase → repeat */
 @keyframes typing{
   0%   { width:0 }
   60%  { width:calc(var(--chars) * 1ch) }   

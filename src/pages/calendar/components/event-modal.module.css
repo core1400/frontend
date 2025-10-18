@@ -3,7 +3,6 @@
   display:grid; place-items:center; z-index:50;
 }
 
-/* המודאל עצמו מוגבל לגובה מסך + גלילה פנימית */
 .modal{
   width:min(640px,92vw);
   max-height:88vh;
@@ -17,13 +16,11 @@
 }
 .iconBtn{ border:none; background:transparent; cursor:pointer; font-size:20px; line-height:1; }
 
-/* גוף המודאל עם גלילה כאשר התוכן גבוה */
 .modalBody{
   padding:0 18px 6px;
   overflow-y:auto;
 }
 
-/* שדות */
 .field{ display:flex; flex-direction:column; gap:6px; margin:10px 0; }
 .field>span{ font-size:14px; color:var(--brand-ink-weak); }
 
@@ -44,18 +41,15 @@
   font-size:14px;
 }
 
-/* input חד-שורה עם אליפסיס */
 .wrapInput{ overflow:hidden; text-overflow:ellipsis; direction:rtl; }
 
-/* textarea – גדילה אוטומטית עד 40vh; אח"כ scrollbar פנימי */
 .textarea{
-  resize:none;            /* ניהול גובה בקוד */
+  resize:none;
   line-height:1.35;
   max-height:40vh;
   overflow:auto;
 }
 
-/* עטיפה חכמה לכל טקסט ארוך */
 .wrapAnywhere{
   white-space:pre-wrap;
   overflow-wrap:anywhere;
@@ -65,12 +59,10 @@
 
 .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
 
-/* צבעים */
 .colorGrid{ display:grid; grid-template-columns:repeat(8,1fr); gap:8px; }
 .colorSwatch{ width:34px; height:28px; border-radius:8px; border:2px solid transparent; cursor:pointer; }
 .isActive{ outline:2px solid var(--accent-2); border-color:var(--accent-2); }
 
-/* כפתורים בתחתית – לא נגללים עם הגוף */
 .modalActions{
   display:flex; gap:10px; justify-content:flex-start;
   padding:12px 18px 18px; border-top:1px solid #00000010;
@@ -82,7 +74,6 @@
 .primaryBtn:hover{ filter:brightness(.98); }
 .ghostBtn{ background:var(--surface-2); }
 
-/* read-only boxes */
 .readonlyBox{
   background:var(--surface-2);
   border:1px solid var(--line);
@@ -90,28 +81,22 @@
   padding:10px 12px;
 }
 
-/* ------- תוספות לוולידציית שעות ------- */
-
-/* מחלקה שנוספת לשדות ה-time כאשר הטווח לא תקין */
 .invalid{
   border-color:#e53935 !important;
   box-shadow:0 0 0 3px rgba(229,57,53,.15);
 }
 
-/* טקסט אזהרה מתחת לשדות */
 .timeErrorText{
   color:#e53935;
   font-size:16px;
   margin-top:6px;
 }
 
-/* מצב כפתור שמור/הוסף כשהוא כבוי בגלל טווח לא תקין */
 .primaryBtn:disabled{
   opacity:.65;
   cursor:not-allowed;
   filter:none;
 }
 
-/* רספונסיביות */
 @media (max-width:900px){ .colorGrid{ grid-template-columns:repeat(6,1fr); } }
 @media (max-width:640px){ .grid2{ grid-template-columns:1fr; } }

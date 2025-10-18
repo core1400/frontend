@@ -17,9 +17,6 @@ async function loginRequest(creds: LoginCredentials): Promise<LoginResult> {
     firstLogin: true,            // נקבע ע"י השרת
     tempPassword: "A7F9-3QZP-12" // סיסמה זמנית מהשרת
   };
-
-  // דוגמה ללא התחברות ראשונה:
-  // return { success: true, firstLogin: false };
 }
 
 const Login: React.FC = () => {
