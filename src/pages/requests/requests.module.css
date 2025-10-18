@@ -30,7 +30,6 @@
 .list { padding: 8px 6px 16px; }
 .empty { padding: 20px; color: #8d8d8d; }
 
-/* Row + expansion */
 .row { border-bottom: 1px solid #eee; }
 .rowHeader {
   width: 100%;
@@ -122,3 +121,15 @@
   cursor: pointer;
 }
 .submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.typeChip_approved {
+  background-color: #e8f7ec;
+  color: #106b21;
+  border-color: #106b21;
+}
+
+.typeChip_rejected {
+  background-color: #fdeaea;
+  color: #a11212;
+  border-color: #a11212;
+}

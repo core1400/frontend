@@ -5,7 +5,6 @@ import type { RequestItem, RequestType } from '../types/requests.types';
 const REQUEST_TYPES: RequestType[] = ['בקש"צ', 'חופ"ל', 'ת"ש', 'קפ"ס'];
 
 interface Props {
-  // description becomes optional (only for בקש"צ)
   onSubmit: (draft: Pick<RequestItem, 'type' | 'date' | 'name' | 'serial'> & { description?: string }) => void;
   isSubmitting?: boolean;
 }
@@ -28,8 +27,8 @@ const RequestForm: React.FC<Props> = ({ onSubmit, isSubmitting }) => {
     onSubmit({
       type,
       date: new Date().toISOString(),
-      name: '',   // derive from auth later
-      serial: '', // derive from auth later
+      name: '',   
+      serial: '',
       ...(isBaksz ? { description } : {}),
     });
     setDescription('');

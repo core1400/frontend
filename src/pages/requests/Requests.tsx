@@ -28,7 +28,7 @@ export const mock: RequestItem[] = [
 ];
 
 export default function Requests({ role: userRole }: { role?: UserRole }) {
-  const role: UserRole = userRole ?? 'חניך'; // default role for demo
+  const role: UserRole = userRole ?? 'חניך';
   const [items, setItems] = useState<RequestItem[]>(mock);
 
   // Role-based visibility:
@@ -63,7 +63,6 @@ export default function Requests({ role: userRole }: { role?: UserRole }) {
     setItems((prev) => [newItem, ...prev]);
   };
 
-  // AND approval flow for בקש"צ
   const handleDecision = (id: string, decision: 'approved' | 'rejected') => {
     if (!isApprover(role)) return;
 
@@ -77,7 +76,6 @@ export default function Requests({ role: userRole }: { role?: UserRole }) {
     );
   };
 
-  // "טופל" for non-בקש"צ in In-Progress (מפקד only) -> move to previous
   const handleHandled = (id: string) => {
     if (role !== 'מפקד') return;
     setItems((prev) =>

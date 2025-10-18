@@ -17,7 +17,6 @@
 .list { padding: 8px 6px 16px; }
 .empty { padding: 20px; color: #8d8d8d; }
 
-/* Row + expansion */
 .row { border-bottom: 1px solid #eee; }
 .rowHeader {
   width: 100%;

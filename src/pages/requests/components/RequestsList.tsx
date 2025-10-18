@@ -8,7 +8,6 @@ interface Props {
   items: RequestItem[];
   role: UserRole;
   onDecision?: (id: string, decision: 'approved' | 'rejected') => void;
-  // new: show "טופל" for non-בקשה"צ only when this list is in-progress
   isInProgressList?: boolean;
   onHandled?: (id: string) => void;
   className?: string;
@@ -45,6 +44,14 @@ const RequestsList: React.FC<Props> = ({
             const canMarkHandled =
               isCommander && isInProgressList && !isBaksz && r.status === 'in_progress';
 
+            const combinedDecision =
+              isBaksz ? getCombinedDecision(r) : null;
+            const typeChipClass = `${styles.typeChip} ${
+              role === 'חניך' && combinedDecision
+                ? styles[`typeChip_${combinedDecision}`]
+                : ''
+            }`;
+
             return (
               <div key={r.id} className={styles.row}>
                 <button
@@ -62,7 +69,7 @@ const RequestsList: React.FC<Props> = ({
                       ▾
                     </span>
                   )}
-                  <span className={styles.typeChip}>{r.type}</span>
+                  <span className={typeChipClass}>{r.type}</span>
                   <span className={styles.meta}>
                     {new Date(r.date).toLocaleDateString('he-IL')}
                     {isApprover(role) ? ` • ${r.name}` : ''}
@@ -149,6 +156,17 @@ function badgeText(state: 'pending' | 'approved' | 'rejected') {
     default:
       return 'ממתין';
   }
+}
+
+function getCombinedDecision(
+  r: RequestItem
+): 'approved' | 'rejected' | null {
+  const commander = r.approvals['מפקד'];
+  const mmk = r.approvals['ממ"ק'];
+
+  if (commander === 'rejected' || mmk === 'rejected') return 'rejected';
+  if (commander === 'approved' && mmk === 'approved') return 'approved';
+  return null;
 }
 
 export default RequestsList;
