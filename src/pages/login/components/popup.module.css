@@ -26,11 +26,9 @@
   box-shadow: 0 16px 48px rgba(0,0,0,0.55);
 }
 
-
-
 .title {
   margin: 0 0 18px 0;
-  font-size: 22px;            /* גדול יותר */
+  font-size: 22px;
   color: #00ff75;
   font-weight: 800;
 }
@@ -53,6 +51,11 @@
   font-weight: 800;
   letter-spacing: 0.6px;
   overflow-wrap: anywhere;
+  color: #fff;
+  background-color: transparent;
+}
+.password:focus {
+  background-color: transparent;
 }
 
 .copyBtn {
@@ -70,8 +73,9 @@
 .copyBtn:active { transform: scale(0.98); }
 .copyBtn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.copyIcon {
-  display: block;
+.toggleIcon {
+  width: 18px;
+  height: 18px;
 }
 
 .timerWrap {

@@ -6,7 +6,7 @@ import type { LoginCredentials } from "../types/login.types";
 export interface LoginFormProps {
   onSubmit: (creds: LoginCredentials) => void | Promise<void>;
   loading?: boolean;
-  errorMsg?: string | null; // חדש: הודעת שגיאה שמגיעה מהדף
+  errorMsg?: string | null;
 }
 
 const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg }) => {
@@ -35,7 +35,6 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg })
           width="100%"
           height="48px"
           textSize="16px"
-          // disabled={loading} // אופציונלי: לנעול בזמן טעינה
         />
 
         <InputField
@@ -49,7 +48,6 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg })
           width="100%"
           height="48px"
           textSize="16px"
-          // disabled={loading} // אופציונלי
         />
 
         {errorMsg && (
@@ -60,7 +58,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg })
 
         <div className={styles.actions}>
           <button type="submit" className={styles.submitButton} disabled={loading}>
-            {loading ? "מבצע התחברות..." : "Login"}
+            {loading ? "מבצע התחברות..." : "התחברות"}
           </button>
         </div>
       </form>
