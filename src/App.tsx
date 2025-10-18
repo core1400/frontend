@@ -40,7 +40,7 @@ function App() {
             );
           })}
 
-        <Route path="/" element={<Navigate to="/home" replace />} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
       <ToastContainer
         position="top-right"

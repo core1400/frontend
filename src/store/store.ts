@@ -9,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
-import storageSession from 'redux-persist/lib/storage/session'; // ✅ sessionStorage
+import storageSession from 'redux-persist/lib/storage/session'; 
 import { authReducer } from './authslice';
 
 // Persist ONLY the auth slice under key "auth"

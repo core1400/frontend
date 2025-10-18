@@ -4,6 +4,8 @@ import styles from "./navbar.module.css";
 import coreLogo from "../../assets/core-logo-navbar.jpg";
 import type {Role} from "../../utils/types/navbar.types";
 import { pages } from "../../utils/config/pages.config";
+import { useDispatch } from "react-redux"; 
+import { clearToken } from "../../store/authslice";
 
 const CloseIcon: React.FC = () => (
   <svg
@@ -48,7 +50,8 @@ const Navbar: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
-
+  const dispatch = useDispatch();
+  
   // dummy server data — replace when API is ready
   const name: string = "אור שביט מליבוב";
   const misparIshi: string = "123456789";
@@ -80,7 +83,10 @@ const Navbar: React.FC = () => {
   }, [location.pathname]);
 
   const visiblePages = pages.filter((p) => p.roles.includes(role));
-
+  const handleSignOut = () => {
+      dispatch(clearToken());
+      navigate("/login");
+  };
 
   return (
     <nav className={styles.nav} aria-label="Primary">
@@ -119,7 +125,7 @@ const Navbar: React.FC = () => {
             type="button"
             className={styles.signOutBtn}
             aria-label="Sign out"
-            onClick={() => navigate("/login")}
+            onClick={handleSignOut}
           >
             <SignOutIcon />
             <span>יציאה</span>
