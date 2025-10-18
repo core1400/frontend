@@ -1,54 +1,52 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
 import Form from "./components/Form";
 import Popup from "./components/Popup";
-import type { LoginCredentials, LoginResult } from "./types/login.types";
-
-async function loginRequest(creds: LoginCredentials): Promise<LoginResult> {
-  await new Promise((r) => setTimeout(r, 600));
-
-  if (!creds.username || !creds.password) {
-    return { success: false, firstLogin: false, message: "פרטים חסרים" };
-  }
-
-  // דמו לתשובת שרת
-  return {
-    success: true,
-    firstLogin: true,            // נקבע ע"י השרת
-    tempPassword: "A7F9-3QZP-12" // סיסמה זמנית מהשרת
-  };
-}
+import { setToken } from "../../store/authslice";
+import type { SignInResponse } from "../../services/login-service";
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
+  const [personalNumber, setPersonalNumber] = useState("");
+  const [password, setPassword] = useState("");
   const [showPopup, setShowPopup] = useState(false);
-  const [tempPassword, setTempPassword] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (showPopup) {
-      document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = ""; };
-    }
+    document.body.style.overflow = showPopup ? "hidden" : "";
   }, [showPopup]);
 
-  const handleSubmit = async (creds: LoginCredentials) => {
+  const handleSubmit = async (): Promise<void> => {
     setLoading(true);
     setErrorMsg(null);
-    try {
-      const res = await loginRequest(creds);
 
-      if (!res.success) {
-        setErrorMsg(res.message || "שגיאה בהתחברות");
+    try {
+      const response = await axios.post<SignInResponse>(
+        "http://localhost:5215/auth/sign-in",
+        { personalNumber, password }
+      );
+
+      if (response.status !== 200) {
+        setErrorMsg("שגיאה בהתחברות");
         return;
       }
 
-      if (res.firstLogin && res.tempPassword) {
-        setTempPassword(res.tempPassword);
+      if (response.data.isFirstConnection) {
         setShowPopup(true);
       } else {
-        // TODO: navigate("/home")
+        // console.log("Received token:", response.data.token); 
+        dispatch(setToken(response.data.token));
+        navigate("/home");
       }
+    } catch (error: any) {
+      console.error("Login error:", error);
+      setErrorMsg("שגיאה בהתחברות");
     } finally {
       setLoading(false);
     }
@@ -57,17 +55,22 @@ const Login: React.FC = () => {
   return (
     <div className={styles.page}>
       <div className={styles.formWrapper}>
-        <Form onSubmit={handleSubmit} loading={loading} errorMsg={errorMsg} />
+        <Form
+          onSubmit={handleSubmit}
+          loading={loading}
+          errorMsg={errorMsg}
+          personalNumber={personalNumber}
+          password={password}
+          setPersonalNumber={setPersonalNumber}
+          setPassword={setPassword}
+        />
       </div>
 
       {showPopup && (
         <Popup
-          onSubmit={async (newPassword) => {
-          }}
-          onClose={() => {
-            setShowPopup(false);
-            setTempPassword(null);
-          }}
+          onClose={() => setShowPopup(false)}
+          personalNumber={personalNumber}
+          password={password}
         />
       )}
     </div>

@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./form.module.css";
 import InputField from "../../../components/common/InputField/InputField";
-import type { LoginCredentials } from "../types/login.types";
 
-export interface LoginFormProps {
-  onSubmit: (creds: LoginCredentials) => void | Promise<void>;
+export interface FormProps {
+  onSubmit: () => void | Promise<void>;
   loading?: boolean;
   errorMsg?: string | null;
+  personalNumber: string;
+  password: string;
+  setPersonalNumber: (v: string) => void;
+  setPassword: (v: string) => void;
 }
 
-const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+const Form: React.FC<FormProps> = ({
+  onSubmit,
+  loading = false,
+  errorMsg,
+  personalNumber,
+  password,
+  setPersonalNumber,
+  setPassword,
+}) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ username, password });
+    onSubmit();
   };
 
   return (
@@ -27,9 +35,9 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg })
         <InputField
           label="מס' אישי"
           type="text"
-          value={username}
+          value={personalNumber}
           valueColor="white"
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setPersonalNumber(e.target.value)}
           labelBgColor="#152411"
           textBorderColor="#00ff75"
           width="100%"
@@ -50,11 +58,7 @@ const Form: React.FC<LoginFormProps> = ({ onSubmit, loading = false, errorMsg })
           textSize="16px"
         />
 
-        {errorMsg && (
-          <div className={styles.errorMsg}>
-            {errorMsg}
-          </div>
-        )}
+        {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
 
         <div className={styles.actions}>
           <button type="submit" className={styles.submitButton} disabled={loading}>
