@@ -1,6 +1,6 @@
 .formControl {
   font-family: 'Segoe UI', sans-serif;
-  margin: 1em 0;
+  margin: 5px 0;
   position: relative;
   width: var(--field-width);
 }

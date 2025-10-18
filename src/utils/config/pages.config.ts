@@ -3,6 +3,7 @@ import  CommonForms from "../../pages/common-forms/CommonForms";
 import CourseInfo from "../../pages/course-info/CourseInfo";
 import Calendar from "../../pages/calendar/Calendar";
 import Requests from "../../pages/requests/Requests";
+import CourseCreate from "../../pages/course-create/CourseCreate";
 
 // Central config for all navbar/sidebar pages
 export const pages: PageConfig[] = [
@@ -14,10 +15,11 @@ export const pages: PageConfig[] = [
     element: Calendar
   },
   {
-    id: "studentRole",
-    label: "חנתר וא' כיתה",
-    path: "/student-roles",
-    roles: ["מפקד"],
+    id: "courseCreation",
+    label: "יצירת קורס",
+    path: "/course-creation",
+    roles: [ "אדמין","מפקד"],
+    element: CourseCreate
   },
   {
     id: "commonForms",
@@ -49,7 +51,7 @@ export const pages: PageConfig[] = [
     id: "courseInfo",
     label: "מידע כללי קורס",
     path: "/course-info",
-    roles: ["מפקד", "ממ\"ק"],
+    roles: ["מפקד", "ממ\"ק","אדמין"],
     element: CourseInfo,
   },
 ];
