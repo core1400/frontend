@@ -60,9 +60,10 @@ const Login: React.FC = () => {
         <Form onSubmit={handleSubmit} loading={loading} errorMsg={errorMsg} />
       </div>
 
-      {showPopup && tempPassword && (
+      {showPopup && (
         <Popup
-          password={tempPassword}
+          onSubmit={async (newPassword) => {
+          }}
           onClose={() => {
             setShowPopup(false);
             setTempPassword(null);
